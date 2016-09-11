@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+  #div0{
+    /*background-color: red;*/
+    width: 200px;
+    height: 600px;
+    float: left;
+  }
+  #div1{
+    float: left;
+    width: 200px;
+  }
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="加" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="油" /”> </div>
+ 
+</body>
+
+<script>
+
+ 
+div0 = document.createElement("div");
+ 
+
+Array.matrix = function(m,n,initial ){
+  var i,j,mat = [];
+ 
+  for (i = 0; i < m; i++) {
+      a = [];
+      for (j = 0; j < n; j++) {
+         a[j] = initial;
+
+      }
+      
+      mat[i] = a;
+  }
+  console.log(mat);
+  return mat;
+}
+ 
+
+
+div0.innerText =  Array.matrix(5,4,0)
+
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>
