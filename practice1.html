@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+  #div0{
+    /*background-color: red;*/
+    width: 200px;
+    height: 600px;
+    float: left;
+  }
+  #div1{
+    float: left;
+    width: 200px;
+  }
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="加" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="油" /”> </div>
+ 
+</body>
+
+<script>
+
+ 
+div0 = document.createElement("div");
+ 
+
+
+var fibonacci = function(){
+  var memo = [0,1];
+  var fib = function(n){
+    var result = memo[n];
+    if (typeof result !== "number"){
+      result = fib(n - 1)+fib(n - 2);
+      memo[n] = result;
+    }
+    return result;
+  }
+
+ return fib;
+}();
+  
+
+var memoizer = function(memo,fomula ){
+   var recur = function(n){
+      var result = memo[n];
+      if (typeof result !== "number"){
+      result =  fomula(recur,n);
+      memo[n] = result;
+    }
+    return result;
+  }
+   return recur;
+
+};
+
+var fibonaccii = memoizer([0,1],function (recur,n){
+ return recur(n - 1) + recur(n - 2); 
+})
+
+var factor = memoizer([1],function (recur,n){
+ return n * recur(n - 1); 
+})
+
+
+div0.innerText =  fibonaccii(10);
+
+
+   Object.prototype.toString.apply([1,2,3])
+                 
+
+
+ 
+document.body.appendChild(div0);
+</script>
