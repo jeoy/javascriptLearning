@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+  #div0{
+    /*background-color: red;*/
+    width: 200px;
+    height: 600px;
+    float: left;
+  }
+  #div1{
+    float: left;
+    width: 200px;
+  }
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="加" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="油" /”> </div>
+ 
+</body>
+
+<script>
+
+ 
+div0 = document.createElement("div");
+// add a create new object method for all the object
+Object.create = function (o) {
+  var F = new Object();
+  F.prototype = o;
+  return new F();
+} ;
+ 
+// add a add method method for all the function
+
+Function.prototype.method = function (name, func) {
+  this.prototype[name] = func;
+  return this;
+}
+
+String.method('entityify',function (){
+  var character = {
+     '<' : "&lt;",
+     '>' : "&gt;",
+     '&' : "&amp;",
+     '"' : "&quot;"
+  }
+  return function () {
+    return this.replace(/[<>&"]/g,function(bb){
+       return character[bb];
+    })
+  }
+}());
+
+String.prototype.myentityify = function(){
+  var character = {
+     '<' : "&lt;",
+     '>' : "&gt;",
+     '&' : "&amp;",
+     '"' : "&quot;"
+  }
+   return this.replace(/[<>&"]/g,function(bb){
+       return bb+" ______"
+    })
+}
+div0.innerText = 'ddsdswwod"a<wqe>"'.replace(/([<])([>&"])/g,function($1,$2){
+   return "匹配到1号"+$1 + " " +  "匹配到2号"+$2 + "\n" ;
+});
+ 
+// replace 参数是函数的机制   
+// 正则表达式是全局 g 则会每次往后匹配 调用多次function 
+div0.innerText = 'Startddo&ddsa我"x<wqe>x"'.replace(/([<&>"])/g,function(a,b,$3,$4,$5,$6,$7){
+   return "\n" + "param1，匹配到的所有字符串: "+a + "\n " +  "param2,第一个括号即\\1的内容:"+b + "\n" +"param3，第二个括号即\\1的内容："+$3 + "\n"  +"param4如果还有括号："+$4 + "\n"  + "括号匹配结束后参数，未匹配到的字符串长度："+$5 + "\n"  + "原字符串"+$6 + "\n"  + "匹配到7号"+$7 + "\n"  ;
+});
+
+ 
+document.body.appendChild(div0);
+</script>
