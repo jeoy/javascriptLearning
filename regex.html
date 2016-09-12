@@ -26,9 +26,12 @@
  
 div0 = document.createElement("div");
  
-var str = "the cost of dsads of gasoline going up up?";
+var str = "the the cost of of gasoline going up up?";
 var str2 = "http://www.w3cschool.cc:80/html/html?q#-tutorial.html"
+var areacode = "(555)666-1212";
+
 var regEx = /\b([a-z]+)\b(.*)\1\b/gi ;
+var oldareacode = /\((\d{3})\)/g;
 
 var parseURL = /(\w+):\/\/([^/:]+)(:\d*)?([^# ]*)/; 
 
@@ -41,16 +44,9 @@ for(var i=0; i<=255; i++) {
     ASCstr += String.fromCharCode(i); // 填充字符
 }
 var re = /\cB/;
-
-var aaa = 0;
-function a(n){
-  aaa ++;
-  if(n<=3) return 1;
-  else return a(n-2)+ a(n-6) + 1;
-}
-
-a(a(9))
-div0.innerText = aaa;
+ 
+div0.innerText = areacode.replace(oldareacode,"$1s-");
+// areacode.replace(oldareacode,"hahah");
  
 
 
