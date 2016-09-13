@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+  #div0{
+    /*background-color: red;*/
+    width: 200px;
+    height: 600px;
+    float: left;
+  }
+  #div1{
+    float: left;
+    width: 200px;
+  }
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="加" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="油" /”> </div>
+ 
+</body>
+
+<script>
+
+
+div0 = document.createElement("div");
+ 
+var ArrayA = [1,2,3,4,5];
+var result1 = ArrayA.constructor === Array;
+
+var result2 = Object.prototype.toString.apply(ArrayA) === '[object Array]';
+
+//agrument 不是数组，可以通过 slice(0) 转换
+var count = {}
+
+NaN = "居然可以改"
+div0.innerText = typeof ArrayA + "\n" + ArrayA.constructor  + '\n'+ typeof count + "\n" + count.constructor;
+// areacode.replace(oldareacode,"hahah");
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>

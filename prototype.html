@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+  #div0{
+    /*background-color: red;*/
+    width: 200px;
+    height: 600px;
+    float: left;
+  }
+  #div1{
+    float: left;
+    width: 200px;
+  }
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="加" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="油" /”> </div>
+ 
+</body>
+
+<script>
+ result = [];
+// 对于每个构造函数来说，都有一个prototype属性。对于每个对象实例来说，都有_proto_属性。
+function Person(name){
+   
+  this.name = name;
+  
+};
+
+ var A = function() {}; 
+A.prototype = {}; 
+ 
+var B = {}; 
+console.log(A.constructor);       
+console.log(B.constructor);   
+ 
+ 
+ 
+var a = new A(); 
+A.prototype = {}; 
+ 
+var b = new A();   
+b.constructor = A.constructor; 
+console.log(a.constructor == A); 
+console.log(a.constructor == b.constructor); 
+console.log(a instanceof A); 
+console.log(b instanceof A); 
+
+
+ArrayA = [1,2,34]
+div0 = document.createElement("div");
+
+var person1 = new Person("Ilidan");
+result.push(Person.prototype == person1.__proto__);
+result.push(person1.__proto__.constructor);
+result.push(Person.prototype.isPrototypeOf(person1));
+
+result.push(A.constructor);
+result.push(A.prototype.constructor);
+
+
+result = result.join('\n');
+
+ 
+div0.innerText =  result;
+// areacode.replace(oldareacode,"hahah");
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>
