@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+  #div0{
+    /*background-color: red;*/
+    width: 200px;
+    height: 600px;
+    float: left;
+  }
+  #div1{
+    float: left;
+    width: 200px;
+  }
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="加" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="油" /”> </div>
+ 
+</body>
+
+<script>
+
+ 
+div0 = document.createElement("div");
+
+function* idMaker(msg ){
+ 
+ console.log(msg)    //para 1
+ //yield 后面作为一次调用完毕返回的结果，同时 yield的值 = 第二次调用的参数
+  var msg1 = yield msg + '  after '  //返回 para1 after 但是 msg1 = para2 ，这里无视了后面的？
+  console.log(msg1)
+  var msg2 = yield msg1 + '  after '
+  console.log(msg2)
+  var msg3 = yield msg + '  after '
+  console.log(msg3)
+ 
+}
+
+ var gen = idMaker(5);
+value1 =  gen.next( );
+console.log(value1);     
+ value1 = gen.next("Ilidri");
+ console.log(value1);
+ value1  = gen.next("Is");
+  console.log(value1);
+ value1  = gen.next("Invincible");
+  console.log(value1);
+
+
+function *enumerable(msg){
+  console.log(msg)
+  var msg1 = yield msg + '  after '
+  console.log(msg1)
+  var msg2 = yield msg1 + ' after'
+  try{
+    var msg3 = yield msg2 + 'after'
+    console.log('ok')
+  }
+  catch(e){
+    console.log(e)
+  }
+  console.log(msg2 + ' over')
+}
+
+var enumerator = enumerable('hello')
+var ret = enumerator.next() // 控制台显示 hello，ret的值{value:'hello after',done:false}
+ret =  enumerator.next('world') // 控制台显示 world，ret的值{value:'world after',done:false}
+ret = enumerator.next('game') // 控制台显示game，ret的值{value:'game after',done:false}
+// 抛出异常信息
+ret = enumerator.throw(new Error('test')) // 控制台显示new Error('test')信息，然后显示game over。ret的值为{done:true}
+
+
+function* piSeries(){
+  var sum = 0,
+      i = 1.0,
+      j = 1;
+  while (true) {
+    sum = sum + j/i;
+    yield 4 * sum;
+    i = i + 2;
+    j = j * -1;
+  }
+}
+
+var gen = piSeries();
+console.log("start");
+for (var i = 0; i < 100; i++) {
+  console.log(gen.next().value);
+}
+
+ 
+
+div0.innerText = "" ;
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>
