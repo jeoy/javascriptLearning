@@ -1,0 +1,98 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+@font-face { 
+  font-family: FangzPaoXiao; /*这里是说明调用来的字体名字*/ 
+  src: url('../font/方正咆哮体.TTF'); /*这里是字体文件路径*/ 
+}
+  #div0{
+    /*background-color: red;*/
+    width: 200px;
+    height: 600px;
+    float: left;
+  }
+  #div1{
+    float: left;
+    width: 200px;
+  }
+  div input{
+     -webkit-appearance: button; 
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    padding: 5px;
+    font-size: 2em;
+    color: white;
+    background-image: url("../pic/DHBEG.jpg");
+    background-size: 200px;
+    font-family: FangzPaoXiao;
+  }
+
+  #button3 {
+    background-image: url("../pic/DHBattle.jpg");
+  }
+</style>
+</head>
+<ol id = "list"></ol>
+<ul id = "ulist"></ul>
+<body>
+ 
+<div> <input type="button"  id ="button1" value="加"/ >
+  <input type="button" id ="button2" value="油!" /> </div>
+<div>
+  <input type="button" id ="button3" value="点我!" />
+</div>
+</body>
+
+<script>
+ div0 = document.createElement("div");
+//自定义一个绑定函数
+function bind(fn,context){
+  return function(){
+    return fn.apply(context,arguments); // 直接调用了 类似于 ()
+  };
+}
+
+var Demon = {
+     hunter : "illidari",
+   callHunter: function (){
+    div0.innerText =  this.hunter;
+  }
+};
+
+var bt2 = document.getElementById("button2");
+var bt1 = document.getElementById("button1");
+var bt3 = document.getElementById("button3");
+ //wrong     print underfine  因为this的上下文是bt2而不是Demon
+// bt2.onclick = Demon.callHunter;    
+
+//correct
+
+bt2.onclick = function (){
+  Demon.callHunter()
+};
+
+
+//correct  利用bind再把 this绑回Demon去
+bt1.onclick = bind(Demon.callHunter,Demon); 
+//直接调用内置的bind
+
+bt3.onclick =  Demon.callHunter.bind(Demon);
+ 
+// this作为对象的应用，来看看他的context
+var obj ={
+  handler:function(){
+    alert(this == obj);
+  }
+};
+// obj.handler();
+ function foo(){
+    alert(this);
+}
+foo();
+
+new foo(); 
+document.body.appendChild(div0);
+</script>
