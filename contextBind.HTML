@@ -89,10 +89,22 @@ var obj ={
 };
 // obj.handler();
  function foo(){
-    // alert(this);
+    alert(this);
 }
-foo();
+// foo();
 
-new foo(); 
+// new foo();
+
+ function mytest( ){                     
+           var test=10;
+          return function( ){ 
+                 test++;
+               alert(test);
+      } 
+}
+
+var funca = mytest(); 
+funca();
+funca();
 document.body.appendChild(div0);
 </script>

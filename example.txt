@@ -1,1 +1,1 @@
-This Message was from Alayri Souleater
+这条消息是从服务器异步返回的: This Message was from Alayri Souleater
