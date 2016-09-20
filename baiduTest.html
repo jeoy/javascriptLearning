@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+ 
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="jia" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="you" /”> </div>
+ 
+</body>
+
+<script>
+
+ 
+var str1 = "@!%12dgsa";
+var str2 = "010111100";
+
+var regEx = /[0-9a-zA-Z]/;
+var code = "";
+for (var i = 0; i < str1.length; i++) {
+
+  if(regEx.test(str1[i])){
+    code = code + '1';
+  } else {
+    code = code + '0';
+  }
+
+}
+var count = 0;
+var len = code.length;
+for (var i = 0; i < len; i++) {
+  if (str2[i] === code[i]){
+    count ++;
+  }
+
+}
+
+
+var result = count/len;
+ 
+div0 = document.createElement("div");
+ 
+div0.innerText = (result*100).toFixed(2)+"%";
+// areacode.replace(oldareacode,"hahah");
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>
