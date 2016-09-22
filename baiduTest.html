@@ -13,37 +13,71 @@
 </body>
 
 <script>
-
+var  n = 1368864000;
  
-var str1 = "@!%12dgsa";
-var str2 = "010111100";
+var LEAPMONTH = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var FOURYEAR = 1461;
+var DAY = 86400;
 
-var regEx = /[0-9a-zA-Z]/;
-var code = "";
-for (var i = 0; i < str1.length; i++) {
+var days,
+   fourYears,
+   curYear,
+   curMonth,
+   curDay,
+   reDays,
+   isLeap;
 
-  if(regEx.test(str1[i])){
-    code = code + '1';
-  } else {
-    code = code + '0';
-  }
+days = parseInt(n / DAY);
+
+fourYears = parseInt(days / FOURYEAR)
+
+reDays = days%FOURYEAR;
+
+isLeap = false;
+curYear = 1970 +fourYears*4;
+
+    if (reDays<365){
+
+    }
+    else if ( reDays<(730) )  
+    {   
+      curYear += 1;  
+      reDays -= 365;  
+    }  
+    else if ( reDays<(1095) )
+    { 
+        curYear += 2;  
+        reDays -= (730);  
+    }  
+    else
+    {  
+        curYear += 3;  
+        reDays -= (1095);  
+        isLeap = true;  
+    }  
+
+var monthI = isLeap ? LEAPMONTH :MONTH;
+for (var i = 0; i < monthI.length; i++) {
+     var reDays_t = reDays - monthI[i] ;
+     if (reDays_t < 0){
+        curMonth = i + 1;
+        if(reDays_t == 0) {
+           curDay = monthI[i+1]
+        }
+        else
+           curDay = reDays + 1 ;
+        break
+     }
+     reDays = reDays_t;
 
 }
-var count = 0;
-var len = code.length;
-for (var i = 0; i < len; i++) {
-  if (str2[i] === code[i]){
-    count ++;
-  }
+curMonth = curMonth < 10 ? '0'+ curMonth : curMonth;
+curDay = curDay < 10 ? '0'+ curDay : curDay;
 
-}
-
-
-var result = count/len;
- 
 div0 = document.createElement("div");
  
-div0.innerText = (result*100).toFixed(2)+"%";
+div0.innerText = curYear + " " + curMonth +" "+curDay;
 // areacode.replace(oldareacode,"hahah");
  
 
