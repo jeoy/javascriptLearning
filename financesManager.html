@@ -24,19 +24,18 @@ input.money{
   background:gold;
   border: red solid 1px;
 }
-div.table {
-  max-height: 300px;
-  max-width: 200px;
-  /*background: red;*/
-  float: left;
-  overflow: auto;
-  border: groove;
-}
  
 td {
   /*height: 50px;*/
   vertical-align: middle;
    /*border: 1px solid gray;*/
+}
+
+ol{
+  height: 200px;
+  overflow: auto;
+  border: 1px groove gray;
+  width:300px;
 }
 
 </style>
@@ -49,10 +48,7 @@ td {
 <button onclick="add()">加入账本</button>
 <button onclick="clearAll()">clear</button>
 </body>
-<div class = "table">
-
-  <table id = "TBcanteen"></table>
-</div>
+ 
 
 <script>
 
@@ -71,19 +67,6 @@ var categoryEle = ["canteen","eatingOut","fruit","living","dear","learning","con
 
   
  
-function onload(){
-  var objb = JSON.parse(window.localStorage.canteen );
-  var TBcanteen = document.getElementById("TBcanteen");
-  var i = 0;
-  for (var attr in objb){
-    TBcanteen.insertRow(i);
-    TBcanteen.rows[i].insertCell(0);
-    TBcanteen.rows[i].insertCell(1);
-    TBcanteen.rows[i].cells[0].innerHTML = "￥" + attr;
-    TBcanteen.rows[i].cells[1].innerHTML = objb[attr];
-    i ++;
-  }
-}
 function insertNcell(eleTb,n){
   eleTb.insertRow();
   for (var i = 0; i < n; i++) {
@@ -132,28 +115,32 @@ function localStorageAddItem (itemName , addArr){
     window.localStorage[itemName]  =  "["+addArr+"]";
 }
 
-function show(){
+function onload(){
   var listShow = {};
   var olist = {}
   for (var i = 0; i < category.length; i++) {
+    if(window.localStorage[categoryEle[i]] ){
     listShow[categoryEle[i]] =  JSON.parse( window.localStorage[categoryEle[i]] );
+    var title = document.createElement("p2");
+    title.innerHTML = category[i];
+    document.body.appendChild(title);
      olist[categoryEle[i]] = document.createElement("ol");
-     if(listShow[categoryEle[i]]){
-      
      
-     for (var j = 0; j < listShow[categoryEle[i]].length; i++) {
+
+
+     for (var j = 0; j < listShow[categoryEle[i]].length; j++) {
         var liTemp = document.createElement("li");
-        liTemp.innerHTML = listShow[categoryEle[i]][j];
+        liTemp.innerHTML = "￥"  + listShow[categoryEle[i]][j][0] +  "<br>备注:" + listShow[categoryEle[i]][j][1]   + "<br>日期" + listShow[categoryEle[i]][j][2];
         olist[categoryEle[i]].appendChild(liTemp);
      }
-     body.appendChild(olist[categoryEle[i]]);
-     }
+     document.body.appendChild(olist[categoryEle[i]]);
+    
   }
   
-
+  }
 
 }
-show()
+
 function add(){
   // var financeManager = {};
   var inputTb = document.getElementById("inputTb");
@@ -165,21 +152,7 @@ function add(){
 }
  
 
-  var TBcanteen = document.getElementById("TBcanteen");
-   
-   
-  TBcanteen.insertRow();  
-  TBcanteen.rows[TBcanteen.rows.length - 1].insertCell(0);
-  TBcanteen.rows[TBcanteen.rows.length - 1].insertCell(1);
-  TBcanteen.rows[TBcanteen.rows.length - 1].cells[0].innerHTML = "￥" + eleCanteen.value;
-  TBcanteen.rows[TBcanteen.rows.length - 1].cells[1].innerHTML = financeManager.canteen[eleCanteen.value];
  
-  if(window.localStorage.canteen ){
-    window.localStorage.canteen  = window.localStorage.canteen.slice(0,-1) +','+ JSON.stringify(financeManager.canteen).slice(1);
-  }
-  else window.localStorage.canteen  = JSON.stringify(financeManager.canteen);
- 
-  
 
 }
 
