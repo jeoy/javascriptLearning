@@ -45,6 +45,11 @@
 <div>
   <input type="button" id ="button3" value="点我!" />
 </div>
+<form  name = "info">
+  username<input name = "name" value="das" type = "txt"  />  
+  password<input name = "password" type = "txt"/>  
+  <button name = "submit" onclick = "ajaxpost()">submit</button>
+</form>
 <body>
 
 	<div id = "new"></div>
@@ -54,18 +59,24 @@
 
 </body>
 
-<script>
- div0 = document.createElement("div");
 
- document.getElementById("button1").addEventListener("click" ,function(){
- 	 getNewContent();
- 	var para = document.createElement("p");
-	var txt = document.createTextNode("这条消息是js在本地直接打印的");
-	para.appendChild(txt);
-	document.getElementById("new").appendChild(para);
- 	
- } 
- )
-  
+<script>
+div0 = document.createElement("div");
+
+document.getElementById("button1").addEventListener("click" ,function(){
+  getNewContent();
+  var para = document.createElement("p");
+  var txt = document.createTextNode("这条消息是js在本地直接打印的");
+  para.appendChild(txt);
+  document.getElementById("new").appendChild(para);
+} )
+function ajaxpost(){
+  div0.innerText = document.info.name.value ;
+postSomething(document.info.name.value,"ajax.php")
+
+}
+
+
+
 document.body.appendChild(div0);
 </script>

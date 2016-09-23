@@ -1,0 +1,202 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+
+<title> financeManager </title>
+<meta charset = "utf-8"/>
+<style type="text/css">
+label {
+ 
+  display: inline-block;
+  width: 150px;
+}
+input {
+  vertical-align: middle;
+ 
+
+}
+input.money{
+  margin-bottom: 3px;
+  width: 50px;
+  background:gold;
+  border: red solid 1px;
+}
+div.table {
+  max-height: 300px;
+  max-width: 200px;
+  /*background: red;*/
+  float: left;
+  overflow: auto;
+  border: groove;
+}
+ 
+td {
+  /*height: 50px;*/
+  vertical-align: middle;
+   /*border: 1px solid gray;*/
+}
+
+</style>
+</head>
+ 
+<body onload = "onload()">
+<h1> 账本(financeManager) </h1>
+ 
+ 
+<button onclick="add()">加入账本</button>
+<button onclick="clearAll()">clear</button>
+</body>
+<div class = "table">
+
+  <table id = "TBcanteen"></table>
+</div>
+
+<script>
+
+var financeManager = {
+  canteen:{},
+  eatingOut:{},
+  fruit:{},
+  living:{},
+  dear:{},
+  learning:{},
+  connect:{}
+}
+
+var category = ["食堂","外面吃饭","水果🍎和零食","生活用品","晓清非要花的","学习","通讯和交通"] ;
+var categoryEle = ["canteen","eatingOut","fruit","living","dear","learning","connect"];
+
+  
+ 
+function onload(){
+  var objb = JSON.parse(window.localStorage.canteen );
+  var TBcanteen = document.getElementById("TBcanteen");
+  var i = 0;
+  for (var attr in objb){
+    TBcanteen.insertRow(i);
+    TBcanteen.rows[i].insertCell(0);
+    TBcanteen.rows[i].insertCell(1);
+    TBcanteen.rows[i].cells[0].innerHTML = "￥" + attr;
+    TBcanteen.rows[i].cells[1].innerHTML = objb[attr];
+    i ++;
+  }
+}
+function insertNcell(eleTb,n){
+  eleTb.insertRow();
+  for (var i = 0; i < n; i++) {
+     eleTb.rows[eleTb.rows.length - 1].insertCell();
+}
+}
+
+function initialInput(){
+  var inputTb = document.createElement("table");
+
+  inputTb.id = "inputTb";
+
+
+  insertNcell(inputTb,4);
+  inputTb.rows[0].cells[1].innerHTML = "金额";
+  inputTb.rows[0].cells[2].innerHTML = "备注";
+  inputTb.rows[0].cells[3].innerHTML = "时间";
+
+   inputEle = {};
+  for (var i = 0; i < category.length; i++) {
+      inputEle[categoryEle[i]] =  document.createElement("input");
+      inputEle[categoryEle[i] + 'Bk'] =  document.createElement("input");
+      inputEle[categoryEle[i]].className = "money";
+  }
+
+  for (var i = 0; i < category.length; i++) {
+    insertNcell(inputTb,4);
+    inputTb.rows[inputTb.rows.length - 1].cells[0].innerHTML = category[i];
+    inputTb.rows[inputTb.rows.length - 1].cells[1].innerHTML = "￥";
+    inputTb.rows[inputTb.rows.length - 1].cells[1].appendChild(inputEle[categoryEle[i]]);
+
+    inputTb.rows[inputTb.rows.length - 1].cells[2].appendChild(inputEle[categoryEle[i] +'Bk']);
+    inputTb.rows[inputTb.rows.length - 1].cells[3].innerHTML = "time";
+  }
+
+   document.body.appendChild(inputTb);
+  
+}
+initialInput();
+
+function localStorageAddItem (itemName , addArr){
+  if(window.localStorage[itemName]){
+    window.localStorage[itemName] = window.localStorage[itemName].slice(0,-1) + ',' + addArr + "]";
+  }
+  else 
+    window.localStorage[itemName]  =  "["+addArr+"]";
+}
+
+function show(){
+  var listShow = {};
+  var olist = {}
+  for (var i = 0; i < category.length; i++) {
+    listShow[categoryEle[i]] =  JSON.parse( window.localStorage[categoryEle[i]] );
+     olist[categoryEle[i]] = document.createElement("ol");
+     if(listShow[categoryEle[i]]){
+      
+     
+     for (var j = 0; j < listShow[categoryEle[i]].length; i++) {
+        var liTemp = document.createElement("li");
+        liTemp.innerHTML = listShow[categoryEle[i]][j];
+        olist[categoryEle[i]].appendChild(liTemp);
+     }
+     body.appendChild(olist[categoryEle[i]]);
+     }
+  }
+  
+
+
+}
+show()
+function add(){
+  // var financeManager = {};
+  var inputTb = document.getElementById("inputTb");
+
+  for (var i = 0; i < category.length; i++) {
+    if(inputTb.rows[i+1].cells[1].children[0].value){
+    localStorageAddItem( categoryEle[i], JSON.stringify( [inputTb.rows[i+1].cells[1].children[0].value,inputTb.rows[i+1].cells[2].children[0].value,inputTb.rows[i+1].cells[3].innerHTML] ));
+ }
+}
+ 
+
+  var TBcanteen = document.getElementById("TBcanteen");
+   
+   
+  TBcanteen.insertRow();  
+  TBcanteen.rows[TBcanteen.rows.length - 1].insertCell(0);
+  TBcanteen.rows[TBcanteen.rows.length - 1].insertCell(1);
+  TBcanteen.rows[TBcanteen.rows.length - 1].cells[0].innerHTML = "￥" + eleCanteen.value;
+  TBcanteen.rows[TBcanteen.rows.length - 1].cells[1].innerHTML = financeManager.canteen[eleCanteen.value];
+ 
+  if(window.localStorage.canteen ){
+    window.localStorage.canteen  = window.localStorage.canteen.slice(0,-1) +','+ JSON.stringify(financeManager.canteen).slice(1);
+  }
+  else window.localStorage.canteen  = JSON.stringify(financeManager.canteen);
+ 
+  
+
+}
+
+function clearAll(){
+    for (var i = 0; i < category.length; i++) {
+    
+    window.localStorage[categoryEle[i]]= '';
+  }
+}
+ 
+</script>
+
+
+
+
+
+
+
+
+

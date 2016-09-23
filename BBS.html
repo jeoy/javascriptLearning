@@ -1,0 +1,88 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+
+<title> 小番茄的BBS </title>
+<meta charset = "utf-8"/>
+<style type="text/css">
+textarea{
+  display: block;
+  width: 500px;
+  height: 200px;
+} 
+
+button{
+  width: 70px;
+} 
+.line{
+  border: 1px solid  gray; 
+
+  margin:9px;
+  margin-left: 0;
+  width: 500px;
+}
+</style>
+</head>
+ 
+<body>
+<h1> 欢迎来到小番茄的BBS </h1>
+<textarea id = "input" onkeydown="inputFromKeyboard()"></textarea>
+ 
+姓名:<input type="text" id="myname"></input>
+<button onclick = "inputText()" >留言</button>
+
+<button onclick = "clearText()" >清除留言</button>
+ 
+<div class = "line"></div>
+<textarea id = "show" readonly = "readonly" ></textarea>
+ 
+</body>
+
+
+<script>
+
+var input = document.getElementById("input");
+var show = document.getElementById('show');
+var myDate = new Date();
+function inputText(){
+  var words = input.value,
+      memory = window.localStorage;
+  if(words){
+    var myname = document.getElementById("myname");
+    
+    memory.messageBoard += (myname.value ? myname.value : "匿名用户" )+":  " + words; 
+    
+    memory.messageBoard  += '\n' + "发表于"+myDate.getFullYear()+"年" + (myDate.getMonth()+1) +"月" + myDate.getDate()+"日 " +myDate.getHours() +":" + ((myDate.getMinutes()<10) ? '0'+ myDate.getMinutes() : (myDate.getMinutes()));
+    memory.messageBoard  += '\n' + "-----------------------------------";
+    memory.messageBoard  += '\n';
+    memory.messageBoard  += '\n';
+    show.value = memory.messageBoard;
+    input.value = null;
+  }
+  
+}
+function inputFromKeyboard(){
+  if ( event.keyCode == 13 && event.metaKey){
+      inputText();
+  }
+
+}
+function clearText(){
+ 
+  window.localStorage.removeItem("messageBoard");
+  show.value = null;
+}
+ 
+</script>
+
+
+
+
+
+
+
+
+

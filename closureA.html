@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+ 
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="jia" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="you" /”> </div>
+ 
+</body>
+
+<script>
+
+function add2(x){
+	var sum = 0;
+	sum += sumOfArg(arguments);
+	function addt(y){
+		sum += sumOfArg(arguments);
+ 		return addt;
+	}
+	addt.toString = function(){
+		return sum;
+	}
+	return addt;
+ 
+}
+
+function sumOfArg(arg){
+	var argArr = [].slice.call(arg,0);
+	var sum = 0;
+	for (var i = 0; i < argArr.length; i++) {
+		sum += argArr[i];
+	}
+	return sum;
+}
+ 
+
+Number.prototype.plus = function(a){
+	return this + a;
+}
+
+Number.prototype.minus = function(a){
+	return this - a;
+}
+
+
+div0 = document.createElement("div");
+ 
+div0.innerText =   (0).plus(5).minus(3) ;
+// areacode.replace(oldareacode,"hahah");
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>
