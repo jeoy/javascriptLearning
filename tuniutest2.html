@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+ 
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="jia" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="you" /”> </div>
+
+<textarea id = "input" onkeydown="keyDown()"></textarea>
+ 
+</body>
+
+<script>
+
+
+function trans(m,n){
+  var minus = 0;
+  if (m == 0){
+  return '0' ;
+  }
+  else if(m < 0){
+    m = -m;
+    minus = 1;
+  }
+  var result = [];
+  while(m>=1){
+    var rem = m%n;
+    if (rem >= 10){
+        rem = String.fromCharCode(rem+87);
+    }
+    result.unshift(rem);
+    m = parseInt(m/n);
+  }
+  
+  result = result.join('')
+  if (minus) {
+    return '-'+result;
+  }
+  else {
+    return result;
+  }
+}
+ n = 8;
+sum = 15;
+arra = [1,1,10,2,3,10,5,5]
+function calcal(n,sum,arra){
+
+
+ 
+var bin = '';
+var mySum = 0;
+var count = 0;
+for (var i = 0; i < Math.pow(2,n)-1; i++) {
+   bin = trans(i,2);
+   while(bin.length < n){
+      bin = '0'+bin;
+   }
+   for (var j = 0; j < bin.length; j++) {
+       if(+bin[j]){
+          mySum += arra[j];
+       }
+       if(mySum > sum) break;
+   }
+   
+   if (mySum == sum){
+     count ++;
+   }
+   mySum = 0;
+}
+ return count;
+}
+
+sumArra = function(arra){
+  var sum;
+  for (var i = 0; i < arra.length; i++) {
+    sum += arra[i];
+  }
+  return sum;
+}
+
+function Foo() {
+    var i = 0;
+    return function() {
+        alert(i++);
+    }
+}
+ 
+var f1 = Foo(),
+    f2 = Foo();
+f1();
+f1();
+f2();
+
+div0 = document.createElement("div");
+
+div0.innerText = calcal(n,sum,arra);
+
+// areacode.replace(oldareacode,"hahah");
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>

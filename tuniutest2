@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+ 
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="jia" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="you" /”> </div>
+
+<textarea id = "input" onkeydown="keyDown()"></textarea>
+ 
+</body>
+
+<script>
+
+
+function trans(m,n){
+  var minus = 0;
+  if (m == 0){
+  return 0 ;
+  }
+  else if(m < 0){
+    m = -m;
+    minus = 1;
+  }
+  var result = [];
+  while(m>=1){
+    var rem = m%n;
+    if (rem >= 10){
+        rem = String.fromCharCode(rem+87);
+    }
+    result.unshift(rem);
+    m = parseInt(m/n);
+  }
+  
+  result = result.join('')
+  if (minus) {
+    return '-'+result;
+  }
+  else {
+    return result;
+  }
+}
+
+m = -10;
+
+n = 12;
+
+result = trans(m,n);
+div0 = document.createElement("div");
+
+div0.innerText = result;
+
+// areacode.replace(oldareacode,"hahah");
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>
