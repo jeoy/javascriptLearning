@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+ 
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="jia" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="you" /”> </div>
+ 
+</body>
+
+<script>
+
+
+ 
+var	m = 0;
+ 
+var line;
+// var line = read_line();   
+var tree = [];
+var arra = [0,0,1,1] ;
+var arrb = [1,2,3,4];
+// var n = +line[0];   // n 为接下来接受参数个数
+var n = 5;
+ 
+var i = 0
+  while (n-- > 1){
+	// line=read_line();   // 循环读 n次   可以不用while
+	// line=line.split(' ');
+	var a = arra[i]
+	var b = arrb[i]
+	if(!tree[a]) {
+		tree[a] = 0;
+	}
+	tree[b] = tree[a] + 1;
+	if (m < tree[b]){
+		m = tree[b]
+	} 
+	i ++;
+}
+ 
+
+console.log(m + 1);
+
+
+
+
+div0 = document.createElement("div");
+ 
+div0.innerText =  "dsd" ;
+// areacode.replace(oldareacode,"hahah");
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>
