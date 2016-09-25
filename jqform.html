@@ -5,7 +5,19 @@
 <title> </title>
 <style type = "text/css">
 .focus{
-	background: red;
+	background: gold;
+ 
+}
+#selectHero{
+	width: 100px;
+	 font-size: 1em;
+	 height: 200px;
+}
+
+#selectHero2{
+	width: 100px;
+	 font-size: 1em;
+	 height: 200px;
 }
 </style>
 </head>
@@ -17,20 +29,40 @@
 			<legend>个人信息</legend>
 				<div>
 					<label for ="username" >名称</label>
-					<input type="text" value ="请输入名称" id="username"> </input>
+					<input type="text"   id="username"> </input>
 				</div>
 				<div>
-					<label for = "password" >密码</label>
-					<input type="password" value ="请输入密码" id="password">  </input>
+					<label for = "email" >邮箱</label>
+					<input type="text"  id="email">  </input>
 				</div>
 				<div>
 					<label for ="info" >详细信息</label>
 					<textarea id = "info"  value ="请输入详细信息"></textarea>
 				</div>
+				<div>
+					<input type="submit" id ="submit" value="提交"></input>
+				</div>
 		</fieldset>
 	</form>
 </div>
 
+<select multiple id = "selectHero"> 
+	<option >源氏</option>
+	<option>法鸡</option>
+	<option>安娜</option>
+	<option>D.va</option>
+	<option>小美</option>
+	<option>裂空</option>
+</select>
+
+<select multiple id = "selectHero2"> 
+	 
+</select>
+<br>
+<button id ="moveLeft">移动到右边</button>
+<button id ="moveLeftAll">全部移动到右边</button>
+<button id ="moveRight">移动到左边</button>
+<button id ="moveRightAll">全部移动到左边</button>
 </body>
 
 
@@ -38,18 +70,76 @@
 	
 <script> 
 $(function(){
-	$(":input").focus(function(){
-		$(this).addClass("focus");
-		 this.temp = $(this).val();
-		$(this).val("")  ;
-	}).blur(function(){
-		$(this).removeClass("focus");
-		if($(this).val() == ""){
-			$(this).val(this.temp)  ;
+	// $(":input:not(#submit)").focus(function(){
+	// 	$(this).addClass("focus");
+	// 	 this.temp = $(this).val();
+	// 	$(this).val("")  ;
+	// }).blur(function(){
+	// 	$(this).removeClass("focus");
+	// 	if($(this).val() == ""){
+	// 		$(this).val(this.temp)  ;
+	// 	}
+	// });
+	$("#username").blur(function(){
+		var regEx = /[^\w]|^\d/;
+		if(regEx.test($(this).val())){
+			$(this).after("<span id ='nameWarning' >用a户名不能包含非法字符或者以数字开头</span");
+	 
+			// $(this).val("");
 		}
-	});
+	}).focus(function(){
+		$("#nameWarning").remove();
+	})
+	$("#email").blur(function(){
+		$("#emailWarning").remove();
+		var regEx = /^[\w-]+@[\w-]+(\.[\w-])*\.com$/;
+		if(!regEx.test($(this).val())&&$(this).val()){
 
-	
+			$(this).after("<span id ='emailWarning'>非法的邮箱格式</span"); 
+			// $(this).val("");
+		}
+	}).focus(function(){
+		// $(this).triggerHandler("blur");
+	}).keyup(function(){
+		$(this).triggerHandler("blur");
+	})
+	// var $aaa = $("#aa");
+	$("option").click(function(){
+		$(this).css({"background":"silver"});
+	})
+
+	$("option").focus(function(){   //为什么获取不了
+		alert($(this).val());
+		// $(this).css({"background","silver"});
+	})
+
+	$("#moveLeft").click(function(){
+		var $remove = $("#selectHero option:selected");
+		// $remove.appendTo($("#selectHero2")); 
+		$("#selectHero2").append($remove);
+	 
+		
+	})
+	$("#moveLeftAll").click(function(){
+		$("#selectHero option").appendTo("#selectHero2");
+		
+	})
+	$("#moveRight").click(function(){
+		$("#selectHero2 option:selected").each(function(){
+			this.remove();
+			var $newOption = $("<option>"+this.value+"</option>");
+			$("#selectHero").append($newOption);
+		})
+		
+	})
+	$("#moveRightAll").click(function(){
+		$("#selectHero2 option").each(function(){
+			this.remove();
+			var $newOption = $("<option>"+this.value+"</option>");
+			$("#selectHero").append($newOption);
+		})
+		
+	})
 });
 </script>
 </html>
