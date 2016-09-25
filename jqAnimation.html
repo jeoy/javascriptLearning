@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+ .square{
+ 	height: 200px;
+ 	width: 200px;
+ 	background-color: gold;
+ 	border: 1px gold solid;
+ 	position: relative;
+ }
+ 
+</style>
+
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="jia" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="you" /”> </div>
+
+ 
+
+<div class ="square">
+ </div>
+</body>
+
+<script src = "scripts/jquery-1.8.3.min.js"  type = "text/javascript"> </script>
+<script>
+
+function GetRandomNum(Min,Max)
+{   
+var Range = Max - Min;   
+var Rand = Math.random();   
+return(Min + Math.round(Rand * Range));   
+}   
+ 
+
+$(function(){
+	$("#button1").mousemove(function(){
+		// alert("dd");
+		$(".square").animate({left:GetRandomNum(1,800),top:GetRandomNum(1,800),width:GetRandomNum(1,300),height:GetRandomNum(1,300)},400);
+		 
+	});
+
+});
+div0 = document.createElement("div");
+ 
+// div0.innerText = "div0" ;
+// areacode.replace(oldareacode,"hahah");
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>

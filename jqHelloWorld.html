@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+ #tooltip{
+ 	display: none;
+ }
+
+ .level2 li{
+ 	max-width: 50px;
+ 	/*display: none;*/
+ 	/*background-color: red;*/
+ }
+ #myImg{
+ 	display: none;
+ }
+ .level1 ul{
+
+ 	 display: none;
+ }
+</style>
+
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="jia" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="you" /”> </div>
+
+<p><a href = "#" class = "tooltip" title = "自己设置的提示哦亲1">提示1</a></p>
+<p><a href = "#" class = "tooltip" title = "自己设置的提示哦亲2">提示2</a></p>
+<p><a href = "#" title = "自带的提示哦亲1">自带提示2</a></p>
+<p><a href = "#" title = "自带的提示哦亲2">自带提示2</a></p>
+
+
+<div>
+	<ul>
+		<li class = "level1">
+			<a href="#none">德鲁伊</a>
+			<ul class="level2">
+				<li title ="ph">平衡</li>
+				<li title = "sh">守护</li>
+				<li title = "yx">野性</li>
+				<li title = "hf">恢复</li>
+			</ul>
+		</li>
+		<li class = "level1">
+			<a href="#none">圣骑士</a>
+			<ul class="level2">
+				<li title = "">防护</li>
+				<li title = "">神圣</li>
+				<li title = "">惩戒</li>
+			</ul>
+		</li>
+		<li class = "level1">
+			<a href="#none">恶魔猎手</a>
+			<ul class="level2">
+				<li title = "fc">复仇</li>
+				<li title = "hj">浩劫</li> 
+			</ul>
+		</li>
+	</ul>
+</div>
+</body>
+
+<script src = "scripts/jquery-1.8.3.min.js"  type = "text/javascript"> </script>
+<script>
+$(function(){$(".tooltip").mouseover(function(e){
+	this.myTitle = $(this).attr("title");
+	$(this).attr("title",'');
+	var $tip = $("<p id = 'tooltip'>"+ this.myTitle +"</p>");
+	$("body").append($tip);
+	$("#tooltip").css({
+		"position":"absolute",
+		"top": (e.pageY + 2) + "px",
+		"left": (e.pageX + 5) +"px" 
+	}).show(400);
+
+	}) ;
+
+$(".tooltip").mouseout(function(e){
+	this.title = this.myTitle;
+	$("#tooltip").remove();
+
+}).mousemove(function(e){
+	$("#tooltip").css({
+		"position":"absolute",
+		"top": e.pageY + 5 + "px",
+		"left": e.pageX + 5 +"px", 
+		"background-color":"#f1f1f1",
+		"padding":"2px",
+		"font-size":"0.8em",
+
+	})
+
+})
+ 
+$(".level2 li").mouseover(function(e){
+	var imgName = $(this).attr("title");
+	 
+	var imgEle  = $("<img id = 'myImg' src = '../pic/"+imgName + ".jpg'></img");
+	$("body").append(imgEle);
+    $("#myImg").css({
+    	"position":"absolute",
+    	"height" :"400px",
+		"top": e.pageY + 5 + "px",
+		"left": e.pageX + 5 +"px", 
+    }).show(400);
+}).mouseout(function(e){
+	$("#myImg").remove();
+
+}).mousemove(function(e){
+	$("#myImg").css({
+    	"position":"absolute",
+		"top": e.pageY + 5 + "px",
+		"left": e.pageX + 5 +"px", 
+    })
+
+})
+
+
+
+
+})
+
+
+$(".level1 > a").click(function(){ 
+	if($(this).next().is(":visible")){
+		$(this).next().slideUp(1000);
+	}
+	else{
+		$(this).next().slideDown(1000)
+		.parent().siblings().children("a").next().slideUp(1000);
+	}
+	
+});
+// $(document).ready(function(){
+// 	return function(){
+// 		alert("helloWolrd");
+// 	}
+	
+
+// }());
+
+// 直接通过 $() 在dom绘制完后就执行 $括号内部的函数
+// $(function(){
+// 	alert("helloWolrd2")
+// });
+
+// $( function(){
+// 	alert("表达式")
+//  });
+
+div0 = document.createElement("div");
+ 
+div0.innerText = "div0" ;
+// areacode.replace(oldareacode,"hahah");
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>
