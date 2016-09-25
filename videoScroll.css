@@ -20,8 +20,8 @@ fieldset, img { border:none; }
 .change_btn .prev { background-position:0 -400px;  }
 .change_btn .next { width:31px; background-position:-30px -400px; }
 .v_caption em { display:inline; float:right; margin:10px 12px 0 0; font-family:simsun; }
-.v_content { position:relative; width:592px; height:160px; overflow:hidden; border-right:1px solid #E7E7E7; border-bottom:1px solid #E7E7E7; border-left:1px solid #E7E7E7; }
-.v_content_list { position:absolute; width:2500px;top:0px; left:0px; }
+.v_content { position:relative; width:592px; height:160px; overflow: hidden;  border-right:1px solid #E7E7E7; border-bottom:1px solid #E7E7E7; border-left:1px solid #E7E7E7; }
+.v_content_list { position:absolute; width:4500px;top:0px; left:0px; }
 .v_content ul {float:left;}
 .v_content ul li { display:inline; float:left; margin:10px 2px 0; padding:8px; background:url(img/v_bg.gif) no-repeat; }
 .v_content ul li a { display:block; width:128px; height:80px; overflow:hidden; }

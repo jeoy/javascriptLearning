@@ -38,6 +38,10 @@
 				<li><a href="#"><img src="img/04.jpg" alt="龙珠" /></a><h4><a href="#">龙珠</a></h4><span>播放 <em>57,865</em></span></li>
 				<li><a href="#"><img src="img/04.jpg" alt="龙珠" /></a><h4><a href="#">龙珠</a></h4><span>播放 <em>57,865</em></span></li>
 				<li><a href="#"><img src="img/04.jpg" alt="龙珠" /></a><h4><a href="#">龙珠</a></h4><span>播放 <em>57,865</em></span></li>
+				<li><a href="#"><img src="img/04.jpg" alt="龙珠" /></a><h4><a href="#">龙珠</a></h4><span>播放 <em>57,865</em></span></li>
+				<li><a href="#"><img src="img/04.jpg" alt="龙珠" /></a><h4><a href="#">龙珠</a></h4><span>播放 <em>57,865</em></span></li>
+				<li><a href="#"><img src="img/04.jpg" alt="龙珠" /></a><h4><a href="#">龙珠</a></h4><span>播放 <em>57,865</em></span></li>
+				<li><a href="#"><img src="img/04.jpg" alt="龙珠" /></a><h4><a href="#">龙珠</a></h4><span>播放 <em>57,865</em></span></li>
 		     </ul>
 		</div>
 	</div>
@@ -52,35 +56,39 @@
 $(function(){
 	var page = 1;
 	$(".prev").click( function(){
+		// $(".highlight_tip span:eq("+page+")").addClass("current").siblings().removeClass();
 		if(page == 1){
 			$(".v_content_list").animate({
-		left:"-1776px"
-		//为什么 "-= 100px"不行
+		left:"-1776px" 
 	},400)
 		page = 4;
+		$(".highlight_tip span:eq("+(page - 1)+")").addClass("current").siblings().removeClass();
 		}
 		else{
 		page = page - 1;
+		$(".highlight_tip span:eq("+(page - 1)+")").addClass("current").siblings().removeClass();
 		$(".v_content_list").animate({
 		left:"+="+"592px"
 		//为什么 "-= 100px"不行
 	},400)
 
-			
+		
 		}
 
 	});
 
 	$(".next").click( function(){
+		
 		if(page == 4){
 			$(".v_content_list").animate({
-		left:"0"
-		//为什么 "-= 100px"不行
+		left:"0" 
 	},400)
 		page = 1;
+		$(".highlight_tip span:eq("+(page - 1)+")").addClass("current").siblings().removeClass();
 		}
 		else{
 			page = page + 1;
+			$(".highlight_tip span:eq("+(page - 1)+")").addClass("current").siblings().removeClass();
 		$(".v_content_list").animate({
 		left:"-="+"592px"
 		//为什么 "-= 100px"不行
