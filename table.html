@@ -19,15 +19,56 @@
 	 font-size: 1em;
 	 height: 200px;
 }
+
+td{
+	min-width: 100px;
+	/*border: 1px solid gold ;*/
+}
+table{
+	text-align:center;
+	border-collapse: collapse;
+	margin-bottom: 2em;
+	border:  2px dotted gray;
+}
+tr{
+	/*background-color: red;*/
+	border: 2px inset transparent ;
+	
+	/*border: 1px solid gold ;*/
+}
+li{
+	float: left;
+	text-align: center;
+	list-style:  none;
+	width:  60px;
+	border: 1px black solid;
+}
+ul{
+	/*margin: 0px;*/
+	padding: 0px;
+}
+div.clear{
+	clear:both;
+
+}
+.currentTab{
+	background-color: #a1a1a1;
+	color: white;
+}
+.gray{
+	background-color: #e1e1e1;
+}
+
+.goldbk{
+	border: 2px dashed gold;
+}
 </style>
 </head>
 <body>
 
 <div>
 
-<table id ="table1"> 
-
-</table>
+ 
 </body>
 
 
@@ -35,17 +76,85 @@
 	
 <script> 
 $(function(){
-	var dataObj = {
+	var  catgory = ["学校吃","外面吃","买书"]
+	var books = {};
+	books[catgory[0]] = {
 		1:["14","紫荆园","2016-7-8"],
 		2:["24","桃李园","2016-7-18"],
 		3:["8","清芬园","2016-8-16"],
 		4:["3","闻馨园","2016-8-28"],
 		5:["5","玉树园","2016-9-18"],
 		6:["2","澜园","2016-10-8"],
-		7:["43","荷园","2016-10-21"],
+		7:["43","荷园","2016-10-21"], 
 	}
 
+	books[catgory[1]] = {
+		1:["11","呷哺呷哺","2016-7-8"],
+		2:["92","辣尚瘾","2016-7-18"],
+		3:["102","不二吃虾","2016-8-16"],
+		4:["53","麦当劳","2016-8-28"],
+		5:["63","肯德基","2016-9-18"],
+		6:["82","江边城外","2016-10-8"],
+		7:["48","巴西烤肉","2016-10-21"],
+	}
 
+	books[catgory[2]] = {
+		1:["45","javascript语言精粹","2016-7-8"],
+		2:["53","深入浅出NodeJs","2016-7-18"],
+		3:["88","HTTP权威指南","2016-8-16"],
+		4:["67","锋利的Jquery","2016-8-28"],
+		5:["34","Css权威指南","2016-9-18"],
+		6:["65","javascript语言精髓与编程实践","2016-10-8"],
+		7:["23","高性能JavaScript","2016-10-21"],
+	}
+
+	// var $table1 = $("#table1");
+	var warpDiv = $("<div class = 'clear' id = 'tableGroup'></div>");
+	var tabUl = $("<div class = 'clear'><ul id ='selectTab'></ul></div>");
+	tabUl.appendTo("body");
+	for (var j = 0; j < catgory.length; j++) {
+		var newTable = $("<table id = 'table"+j+"'></table>");
+		var tab = $("<li id = 'tab"+j+"'>"+catgory[j]+"</li>");
+		$('#selectTab').append(tab);
+	for (var i = 1; i < Object.keys(books[catgory[j]]).length + 1; i++) {
+		var newRow = $("<tr><td>"+books[catgory[j]][i][0]+"</td><td>"+books[catgory[j]][i][1]+"</td><td>"+books[catgory[j]][i][2]+"</td></tr>");	
+		 
+		newTable.append(newRow);
+	}
+	// tab.appendTo(tabUl);
+
+	if(j == 0){
+		newTable.appendTo(warpDiv);
+	}
+	else{
+		newTable.appendTo(warpDiv).hide();
+	}
+	
+	
+}	
+	
+	warpDiv.appendTo("body");
+	var $selectLi = $("#selectTab li");
+	$selectLi.click(function(){
+		$(this).addClass("currentTab").siblings().removeClass("currentTab");
+		var index = $selectLi.index(this);
+		$("#tableGroup table:eq("+index+")").show().siblings().hide();
+	})
+
+
+
+	$("tr:even").addClass("gray"); 
+	$("tr").prepend("<td><input type='checkbox' name='choice' value=''/></td>"); 
+
+	$("tr").click(function(){
+		       
+			$(this)[$(this).hasClass("goldbk")?"removeClass":"addClass"]("goldbk").find(":checkbox").attr('checked',$(this).hasClass("goldbk"));
+		 
+
+	});
+	$("tr:contains('')").hide();
+	
+	$(":radio:checked").parent().parent().css({"background-color":"gold"}); //这样会写成内联样式 后面的class修改不了
 
 
 });
