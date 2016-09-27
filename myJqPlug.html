@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title> </title>
+<style type = "text/css">
+p{
+	color: green;
+}
+</style>
+</head>
+<body>
+
+<div >
+<p id ="no1">第一行</p>
+<p id ="no2">第二行</p>
+<p id ="no3">第三行</p>
+<p id ="no4">第四行</p>
+</div>
+
+
+</body>
+
+
+<script  src = "scripts/jquery.js" type="text/javascript"></script>
+	
+<script> 
+;(function($){  //编写了一个color的插件 用于设置和返回 颜色值
+	$.extend($.expr[":"],{
+		between : function(a,i,m){
+			var mArr = m[3].split(",");
+			return i >= mArr[0] - 0 && i < mArr[1] - 0;
+		}
+	});
+
+	$.fn.extend({
+		color: function(value){
+			if(value == undefined){
+				return this.css("color");
+			}
+			else{
+				return this.css({"color":value});
+			}
+		},
+		bkcolor: function(value){
+			if(value == undefined){
+				return this.css("backgroundColor");
+			}
+			else{
+				return this.css({"backgroundColor":value});
+			}
+		}
+	});
+
+ 
+ 
+})(jQuery);
+
+$(function(){
+	 $("p:between(0,2)").bkcolor("gold");
+
+})
+
+</script>
+</html>

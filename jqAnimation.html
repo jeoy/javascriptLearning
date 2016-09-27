@@ -33,7 +33,38 @@ var Range = Max - Min;
 var Rand = Math.random();   
 return(Min + Math.round(Rand * Range));   
 }   
+
+var num = [];
+
+for (var j = 0; j < 10000; j++) {
  
+var i;
+var a = [0,0,0,0,0,0,0,0,0,0];
+var n = 0;
+var sum;
+while(1){
+	i = GetRandomNum(0,10);
+	if(i==10) i=0;
+	a[i] = 1;
+	n = n + 1;
+	sum = 0;
+	for (var i in a){
+		sum += a[i];
+	}
+	if (sum == 10)
+		break;
+}
+
+num.push(n);
+
+}
+var sumA = 0;
+for(var i=0;i<num.length;i++)
+{
+   sumA+=num[i];
+}
+
+avg=sumA/num.length;
 
 $(function(){
 	$("#button1").mousemove(function(){
@@ -43,9 +74,11 @@ $(function(){
 	});
 
 });
+
+ 
 div0 = document.createElement("div");
  
-// div0.innerText = "div0" ;
+div0.innerText =  avg ;
 // areacode.replace(oldareacode,"hahah");
  
 

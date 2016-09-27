@@ -85,7 +85,7 @@ $(function(){
 		4:["3","闻馨园","2016-8-28"],
 		5:["5","玉树园","2016-9-18"],
 		6:["2","澜园","2016-10-8"],
-		7:["43","荷园","2016-10-21"], 
+		7:["43","荷园","2016-10-21"],  
 	}
 
 	books[catgory[1]] = {
@@ -95,7 +95,7 @@ $(function(){
 		4:["53","麦当劳","2016-8-28"],
 		5:["63","肯德基","2016-9-18"],
 		6:["82","江边城外","2016-10-8"],
-		7:["48","巴西烤肉","2016-10-21"],
+		7:["48","巴西烤肉","2016-10-21"], 
 	}
 
 	books[catgory[2]] = {
@@ -121,6 +121,12 @@ $(function(){
 		 
 		newTable.append(newRow);
 	}
+	// if(Object.keys(books[catgory[j]]).length %2 ){
+	// 	var nullRow = $("<tr><td></td></tr>");
+	// 	nullRow.hide();
+	// 	newTable.append(nullRow);
+	// }
+	
 	// tab.appendTo(tabUl);
 
 	if(j == 0){
@@ -143,7 +149,7 @@ $(function(){
 
 
 
-	$("tr:even").addClass("gray"); 
+	$("tr:even,this").addClass("gray"); 
 	$("tr").prepend("<td><input type='checkbox' name='choice' value=''/></td>"); 
 
 	$("tr").click(function(){
