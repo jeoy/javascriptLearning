@@ -46,7 +46,7 @@ $(function(){
 });
 if(navigator.geolocation){
 	$("p").append("可以支持定位 ");
-	navigator.geolocation.getCurrentPosition(function(location){
+	navigator.geolocation.watchPosition(function(location){
 	 
 		$("p").append("<br>经度:" +location.coords.latitude);
 		$("p").append("<br>纬度" + location.coords.longitude);
