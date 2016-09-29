@@ -8,6 +8,9 @@
 <title> financeManager </title>
 <meta charset = "utf-8"/>
 <style type="text/css">
+body{
+  background-color: #f4efd9;
+}
 label {
  
   display: inline-block;
@@ -21,15 +24,72 @@ input {
 input.money{
   margin-bottom: 3px;
   width: 50px;
-  background:gold;
-  border: red solid 1px;
+  /*background:gold;*/
+  /*border: red solid 1px;*/
+}
+
+.focus{
+  background: gold;
+ 
 }
  
-td {
-  /*height: 50px;*/
-  vertical-align: middle;
-   /*border: 1px solid gray;*/
+
+td{
+    vertical-align: middle;
+  min-width: 100px;
+
+ 
 }
+
+#tableGroup {
+
+    max-height:  400px;
+    overflow: scroll;
+    ::-webkit-scrollbar{width:5px};
+}
+#tableGroup table {
+  text-align:center;
+  border-collapse: collapse;
+  margin-bottom: 2em;
+  border:  2px dotted gray;
+
+}
+tr{
+  /*background-color: red;*/
+  border: 2px inset transparent ;
+  
+  /*border: 1px solid gold ;*/
+}
+li{
+  float: left;
+  text-align: center;
+  list-style:  none;
+  width:  55px;
+  height: 55px;
+  border: 1px black solid;
+}
+ul{
+  /*margin: 0px;*/
+  padding: 0px;
+
+}
+div.clear{
+  clear:both;
+
+}
+.currentTab{
+  background-color: #a1a1a1;
+  color: white;
+}
+.gray{
+  background-color: #e1e1e1;
+}
+
+.goldbk{
+  border: 2px dashed gold;
+}
+
+
 
 ol{
   height: 200px;
@@ -37,8 +97,17 @@ ol{
   border: 1px groove gray;
   width:300px;
 }
-#holder{margin:-350px 0 0 -350px;width:700px;height:700px;position:absolute;left:50%;top:50%; overflow: hidden;}
+#holder{margin:-350px 0 0 -350px;width:700px;height:700px;position:absolute;right:0%;top:50%; overflow: hidden;}
 
+
+#tips{
+  margin-left: 40px;
+  color:red;
+}
+
+tspan{
+  color: black !important;
+}
 </style>
 
 <script type="text/javascript" src="scripts/jquery-1.8.3.min.js"></script>
@@ -46,11 +115,11 @@ ol{
 
 </head>
  
-<body onload = "onload()">
+<body  >
 <h1> 账本(financeManager) </h1>
  
- 
-<button onclick="add()">加入账本</button>
+<div><p id ="datePara">这是 <input type="date" id="date" value ="2015-05-05"></input>的消费</p></div>
+<button id="add">加入账本</button>
 <button onclick="clearAll()">clear</button>
 
 <table id = "pieChart" >
@@ -75,7 +144,7 @@ var financeManager = {
   connect:{}
 }
 
-var category = ["食堂","外面吃饭","水果🍎和零食","生活用品","晓清非要花的","学习","通讯和交通"] ;
+var category = ["食堂","外面吃饭","水果和零食","生活用品","晓清非要花的","学习","通讯和交通"] ;
 var categoryEle = ["canteen","eatingOut","fruit","living","dear","learning","connect"];
 
   
@@ -96,13 +165,15 @@ function initialInput(){
   insertNcell(inputTb,4);
   inputTb.rows[0].cells[1].innerHTML = "金额";
   inputTb.rows[0].cells[2].innerHTML = "备注";
-  inputTb.rows[0].cells[3].innerHTML = "时间";
+  // inputTb.rows[0].cells[3].innerHTML = "时间";
 
    inputEle = {};
   for (var i = 0; i < category.length; i++) {
       inputEle[categoryEle[i]] =  document.createElement("input");
       inputEle[categoryEle[i] + 'Bk'] =  document.createElement("input");
       inputEle[categoryEle[i]].className = "money";
+      inputEle[categoryEle[i]].setAttribute("type","number")
+ 
   }
 
   for (var i = 0; i < category.length; i++) {
@@ -112,7 +183,7 @@ function initialInput(){
     inputTb.rows[inputTb.rows.length - 1].cells[1].appendChild(inputEle[categoryEle[i]]);
 
     inputTb.rows[inputTb.rows.length - 1].cells[2].appendChild(inputEle[categoryEle[i] +'Bk']);
-    inputTb.rows[inputTb.rows.length - 1].cells[3].innerHTML = "time";
+     
   }
 
    document.body.appendChild(inputTb);
@@ -142,50 +213,156 @@ function localStorageAddItem (itemName , addArr){
     window.localStorage[itemName]  =   addArr ;
 }
 
-function onload(){
+$(function(){
     initialInput();
 
-  var listShow = {};
-  var olist = {};
-  var money = {};
-  for (var i = 0; i < category.length; i++) {
-    if(window.localStorage[categoryEle[i]] ){
-    listShow[categoryEle[i]] =  JSON.parse( window.localStorage[categoryEle[i]] );
-    var title = document.createElement("p2");
-    title.innerHTML = category[i];
-    document.body.appendChild(title);
-     olist[categoryEle[i]] = document.createElement("ol");
-     
+  var warpDiv = $("<div class = 'clear' id = 'tableGroup'></div>");
+  var tabUl = $("<div class = 'clear'><ul id ='selectTab'></ul></div>");
+  tabUl.appendTo("body");
+  var listShow = {},
+      moneyCount = {};
 
+  for (var j = 0; j < category.length; j++) {
+    var newTable = $("<table id = 'table"+j+"'></table>");
+    var tab = $("<li id = 'tab"+j+"'>"+category[j]+"</li>");
+    $('#selectTab').append(tab);
 
-     for (var j = 0; j < Object.keys(listShow[categoryEle[i]]).length; j++) {
-        var liTemp = document.createElement("li");
-        liTemp.innerHTML = "￥"  + listShow[categoryEle[i]][j][0] +  "<br>备注:" + listShow[categoryEle[i]][j][1]   + "<br>日期" + listShow[categoryEle[i]][j][2];
-        olist[categoryEle[i]].appendChild(liTemp);
-        if (!money[categoryEle[i]]) {
-          money[categoryEle[i]] = 0;
+  
+    if(window.localStorage[categoryEle[j]] ){
+     listShow[categoryEle[j]] =  JSON.parse( window.localStorage[categoryEle[j]] );
+
+  }
+  else{
+    listShow[categoryEle[j]] = {};
+  }
+ 
+
+  for (var i = 0; i < Object.keys(listShow[categoryEle[j]]).length ; i++) {
+    var newRow = $("<tr><td>￥"+listShow[categoryEle[j]][i][0]+"</td><td>"+listShow[categoryEle[j]][i][1]+"</td><td>"+listShow[categoryEle[j]][i][2]+"</td></tr>");  
+    if (!moneyCount[categoryEle[j]]) {
+          moneyCount[categoryEle[j]] = 0;
         }
-        money[categoryEle[i]] += +listShow[categoryEle[i]][j][0];
-     }
-     document.body.appendChild(olist[categoryEle[i]]);
-    
+        moneyCount[categoryEle[j]] += +listShow[categoryEle[j]][i][0];
+    newTable.append(newRow);
+  }
+  if(Object.keys(listShow[categoryEle[j]]).length %2 ){
+    var nullRow = $("<tr><td></td></tr>");
+    nullRow.hide();
+    newTable.append(nullRow);
   }
   
+   
+  if(j == 0){
+    newTable.appendTo(warpDiv);
   }
+  else{
+    newTable.appendTo(warpDiv).hide();
+  }
+  
+  
+} 
+  
+  warpDiv.appendTo("body");
+  var $selectLi = $("#selectTab li");
+  $selectLi.click(function(){
+    $(this).addClass("currentTab").siblings().removeClass("currentTab");
+    var index = $selectLi.index(this);
+    $("#tableGroup table:eq("+index+")").show().siblings().hide();
+  })
 
-  genPieChart(money);
+
+
+  $("#tableGroup tr:even,this").addClass("gray"); 
+  $("#tableGroup tr").prepend("<td><input type='checkbox' name='choice' value=''/></td>"); 
+
+  $("#tableGroup tr").click(function(){
+           
+      $(this)[$(this).hasClass("goldbk")?"removeClass":"addClass"]("goldbk").find(":checkbox").attr('checked',$(this).hasClass("goldbk"));
+     
+
+  });
+  $("#tableGroup tr:contains('')").hide();
+  
+  $("#tableGroup :radio:checked").parent().parent().css({"background-color":"gold"}); //这样会写成内联样式 后面的class修改不了
+
+
+
+
+  genPieChart(moneyCount);
   draw() 
 
-}
+
+
+
+  $("#add").click( function(){
+
+  // var financeManager = {a};
+  var money,
+      backup,
+      date, 
+      curTbLen;
+  
+  var inputTb = document.getElementById("inputTb");
+  date = $("#date").val();
+  $("#tips").remove();
+  if(date){ 
+
+
+    for (var i = 0; i < category.length; i++) {
+      if(inputTb.rows[i+1].cells[1].children[0].value){
+        var objTemp = {};
+  
+        money = inputTb.rows[i+1].cells[1].children[0].value;
+        backup = inputTb.rows[i+1].cells[2].children[0].value;
+        date  =  date;
+
+        if(!/\./.test(money)){
+           money = money +".00";
+        }
+         
+        inputTb.rows[i+1].cells[1].children[0].value = "";
+        inputTb.rows[i+1].cells[2].children[0].value = "";
+        curTbLen = getStroagelength(categoryEle[i]);
+        objTemp[curTbLen]= [money,backup,date];
+  
+        localStorageAddItem( categoryEle[i], JSON.stringify( objTemp ));
+  
+  
+        var newRow = $("<tr><td>￥"+money+"</td><td>"+backup+"</td><td>"+date+"</td></tr>");  
+      
+        newRow.appendTo("#table"+i).prepend("<td><input type='checkbox' name='choice' value=''/></td>")
+        if(curTbLen%2 == 0){
+          newRow.addClass("gray");
+        }
+      }
+    }
+ 
+  }
+  else{
+    $("#datePara").append(" <span id = 'tips'> <---这里要选个日期才行哦</span> ");
+  }
+ // location.reload();
+
+});
+
+
+
+
+});
 
 function genPieChart( obj){
   var $pie = $("#pieChart");
-  
+  var percent;
+
+  percent = calPercent(obj);
   for (var i = 0; i < category.length; i++) {
         
         if(obj[categoryEle[i]]){
+          if(!/\./.test(obj[categoryEle[i]])){
+           obj[categoryEle[i]] = obj[categoryEle[i]] +".00";
+          }
           var $pieTr = $("<tr></tr>");
-          var $pieTh = $("<th>" + category[i] + "</th>");
+          var $pieTh = $("<th>" + category[i] + "\n总计￥"+obj[categoryEle[i]]+"\n"+percent[i]+"%</th>");
           var $pieTd = $("<td>" + obj[categoryEle[i]] + "</td>"); 
           $pieTr.append($pieTh);
           $pieTr.append($pieTd);
@@ -197,23 +374,20 @@ function genPieChart( obj){
 
 }
 
-function add(){
-  // var financeManager = {};
-  var inputTb = document.getElementById("inputTb");
+function calPercent(obj){
+ var sum = 0;
+ var percent = [];
+  for (var i in obj){
+    if(!obj[i]) obj[i] = 0;
+    sum += +obj[i];
+  }
+  for (var i in obj){
+    percent.push((obj[i]/sum*100).toFixed(2));
+  }
 
-  for (var i = 0; i < category.length; i++) {
-    if(inputTb.rows[i+1].cells[1].children[0].value){
-      var objTemp = {};
-      objTemp[getStroagelength(categoryEle[i])]= [inputTb.rows[i+1].cells[1].children[0].value,inputTb.rows[i+1].cells[2].children[0].value,inputTb.rows[i+1].cells[3].innerHTML];
-    localStorageAddItem( categoryEle[i], JSON.stringify( objTemp 
-     ));
- }
+  return percent;
 }
- 
 
- location.reload();
-
-}
 
 function clearAll(){
     for (var i = 0; i < category.length; i++) {
@@ -282,7 +456,7 @@ function draw() {
 
 </script>
 
-<script type="text/javascript" src="scripts/pieChartScript.js"></script>
+ 
 
 
 

@@ -8,17 +8,7 @@
 	background: gold;
  
 }
-#selectHero{
-	width: 100px;
-	 font-size: 1em;
-	 height: 200px;
-}
-
-#selectHero2{
-	width: 100px;
-	 font-size: 1em;
-	 height: 200px;
-}
+ 
 
 td{
 	min-width: 100px;
@@ -108,7 +98,7 @@ $(function(){
 		7:["23","高性能JavaScript","2016-10-21"],
 	}
 
-	// var $table1 = $("#table1");
+	 
 	var warpDiv = $("<div class = 'clear' id = 'tableGroup'></div>");
 	var tabUl = $("<div class = 'clear'><ul id ='selectTab'></ul></div>");
 	tabUl.appendTo("body");
@@ -121,14 +111,13 @@ $(function(){
 		 
 		newTable.append(newRow);
 	}
-	// if(Object.keys(books[catgory[j]]).length %2 ){
-	// 	var nullRow = $("<tr><td></td></tr>");
-	// 	nullRow.hide();
-	// 	newTable.append(nullRow);
-	// }
+	if(Object.keys(books[catgory[j]]).length %2 ){
+		var nullRow = $("<tr><td></td></tr>");
+		nullRow.hide();
+		newTable.append(nullRow);
+	}
 	
-	// tab.appendTo(tabUl);
-
+	 
 	if(j == 0){
 		newTable.appendTo(warpDiv);
 	}
