@@ -10,6 +10,7 @@
 <style type="text/css">
 body{
   background-color: #f4efd9;
+  padding-left: 40px;
 }
 label {
  
@@ -67,6 +68,7 @@ li{
   width:  55px;
   height: 55px;
   border: 1px black solid;
+  /*background-color: gray;*/
 }
 ul{
   /*margin: 0px;*/
@@ -78,15 +80,15 @@ div.clear{
 
 }
 .currentTab{
-  background-color: #a1a1a1;
+  background-color: #cbbba1;
   color: white;
 }
 .gray{
-  background-color: #e1e1e1;
+  background-color: #cbbba1;
 }
 
 .goldbk{
-  border: 2px dashed gold;
+  border: 2px dashed gray;
 }
 
 
@@ -116,7 +118,7 @@ tspan{
 </head>
  
 <body  >
-<h1> 账本(financeManager) </h1>
+<h1> 小薯条的记账本(financeManager)  v.1.0</h1>
  
 <div><p id ="datePara">这是 <input type="date" id="date" value ="2015-05-05"></input>的消费</p></div>
 <button id="add">加入账本</button>
@@ -316,9 +318,13 @@ $(function(){
         backup = inputTb.rows[i+1].cells[2].children[0].value;
         date  =  date;
 
-        if(!/\./.test(money)){
+        if(/\.\d$/.test(money)){
+           money = money +"0";
+        }
+        else if(!/\./.test(money)){
            money = money +".00";
         }
+
          
         inputTb.rows[i+1].cells[1].children[0].value = "";
         inputTb.rows[i+1].cells[2].children[0].value = "";
@@ -362,7 +368,7 @@ function genPieChart( obj){
            obj[categoryEle[i]] = obj[categoryEle[i]] +".00";
           }
           var $pieTr = $("<tr></tr>");
-          var $pieTh = $("<th>" + category[i] + "\n总计￥"+obj[categoryEle[i]]+"\n"+percent[i]+"%</th>");
+          var $pieTh = $("<th>" + category[i] + "\n总计￥"+parseFloat(obj[categoryEle[i]]).toFixed(2)+"\n"+percent[i]+"%</th>");
           var $pieTd = $("<td>" + obj[categoryEle[i]] + "</td>"); 
           $pieTr.append($pieTh);
           $pieTr.append($pieTd);
