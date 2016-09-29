@@ -29,11 +29,20 @@
 			<legend>个人信息</legend>
 				<div>
 					<label for ="username" >名称</label>
-					<input type="text"   id="username"> </input>
+					<input type="number"   id="username"> </input>
+				</div>
+				<div>
+					<label for ="username" >名称</label>
+					<input type="color"   id="username"> </input>
+				</div>
+				<div>
+					<label for ="username" >名称</label>
+					<input type="datetime-local"   id="datetime"> </input>
 				</div>
 				<div>
 					<label for = "email" >邮箱</label>
-					<input type="text"  id="email">  </input>
+					<input type="range"  id="email">  </input>
+					<p></p>
 				</div>
 				<div>
 					<label for ="info" >详细信息</label>
@@ -83,6 +92,11 @@ $(function(){
 	// 		$(this).val(this.temp)  ;
 	// 	}
 	// });
+	 $("#email").change(function(){
+	 	var $rangeVal = $(this).val();
+	 	$(this).next().text($rangeVal);
+	 });
+ 
 	$("#username").blur(function(){
 		var regEx = /[^\w]|^\d/;
 		if(regEx.test($(this).val())){
