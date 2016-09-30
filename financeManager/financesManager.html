@@ -12,7 +12,16 @@ body{
   background-color: #f4efd9;
   padding-left: 40px;
 }
+ul{
+  margin:0px;
+}
 
+span{
+  display: inline-block;
+  width: 90px; 
+  text-align: center;
+  margin-right: 5px;
+}
 #dataInput{
   margin: 1em 0;
 }
@@ -21,10 +30,12 @@ body{
 }
 
 #add{
-  width: 120px;
-  height: 50px;
+  width: 150px;
+ 
   margin-left: 220px;
   font-size: 1.2em;
+  cursor:pointer;
+
 }
 label {
  
@@ -97,7 +108,7 @@ ul{
   padding: 0px;
 
 }
-div.clear{
+.clear{
   clear:both;
 
 }
@@ -122,13 +133,14 @@ ol{
   width:300px;
 }
 #holder{
-  z-index: -5;
+  /*z-index: -1;*/
   margin:-350px 0 0 -350px;width:700px;height:700px;position:absolute;right:0%;top:50%; overflow: hidden;}
 
 
 #tips{
   margin-left: 40px;
   color:red;
+  width: 200px;
 }
 
 #illidaria{
@@ -140,6 +152,23 @@ ol{
 #moneyCount {
   margin-top: 2em;
 }
+
+p.tableTitle{
+
+  margin:0px;
+  margin-top: 5px; 
+  padding: 5px 0;
+  width: 297px;
+  border: solid 1px black;
+  /*background-color: red;*/
+  padding-left: 115px;
+}
+
+#clearBt{
+  position: fixed;
+  top: 0;
+  right: 1%;
+}
 </style>
 
 <script type="text/javascript" src="scripts/jquery-1.8.3.min.js"></script>
@@ -148,15 +177,15 @@ ol{
 </head>
  
 <body  >
-<h1> 小薯条的记账本(financeManager)  v.1.0</h1>
+<h1> 小薯条的记账本(financeManager)  v.1.0.1</h1>
  
 <div><p id ="datePara">这是 <input type="date" id="date" value ="2015-05-05"></input>的消费</p></div>
 
 <img id ="illidaria" src="img/Illidaria.png"></img>
 <div id = "dataInput"> </div>
-
-<button id="add">加入账本</button>
-<button onclick="clearAll()">clear</button>
+<img  id="add" src="img/buttonOut.png"></img>
+<!-- <button id="add">加入账本</button> -->
+<button id = "clearBt" onclick="clearAll()">不要点</button>
 
 <div id = "tableGroup"></div>
  
@@ -194,7 +223,34 @@ function insertNcell(eleTb,n){
 }
 }
 
-function initialInput(){
+
+
+
+
+
+
+function getStroagelength(itemName){
+  if (!window.localStorage[itemName]){
+    return 0;
+  }
+  else {
+  var obj = JSON.parse(window.localStorage[itemName]);
+  return Object.keys(obj).length;
+    }
+}
+
+ 
+function localStorageAddItem (itemName , addArr){
+  if(window.localStorage[itemName]){
+    window.localStorage[itemName] = window.localStorage[itemName].slice(0,-1) + ',' + addArr.slice(1);
+  }
+  else 
+    window.localStorage[itemName]  =   addArr ;
+}
+
+$(function(){
+
+  function initialInput(){
   var inputTb = document.createElement("table");
 
   inputTb.id = "inputTb";
@@ -224,34 +280,11 @@ function initialInput(){
      
   }
    document.getElementById("dataInput").appendChild(inputTb);
- 
+    
+
   
 }
 
-
-
-
-
-function getStroagelength(itemName){
-  if (!window.localStorage[itemName]){
-    return 0;
-  }
-  else {
-  var obj = JSON.parse(window.localStorage[itemName]);
-  return Object.keys(obj).length;
-    }
-}
-
- 
-function localStorageAddItem (itemName , addArr){
-  if(window.localStorage[itemName]){
-    window.localStorage[itemName] = window.localStorage[itemName].slice(0,-1) + ',' + addArr.slice(1);
-  }
-  else 
-    window.localStorage[itemName]  =   addArr ;
-}
-
-$(function(){
     initialInput();
 
 function update(){
@@ -260,9 +293,9 @@ function update(){
   }
    // $("#tableGroup").appendTo("body");
  
-  var warpDiv = $("<div class = 'clear' id = 'tableSubGroup'></div>");
-  var tabUl = $("<div class = 'clear'></div>");
-  var selectTab = $("<ul id ='selectTab'></ul>")
+  var warpDiv = $("<div   id = 'tableSubGroup'></div>");
+  var tabUl = $("<div  ></div>");
+  var selectTab = $("<ul id ='selectTab' class ='clear'></ul>")
   selectTab.appendTo(tabUl);
   var listShow = {},
       moneyCount = {};
@@ -286,8 +319,8 @@ function update(){
   
 
   //表头
-   var newRow = $("<tr><th> </th><th>金额</th><th>花哪去了</th><th>哪天花的 </th></tr>"); 
-    newTable.append(newRow);
+   var newTitleRow = $(" <p class = 'clear tableTitle'>    <span>金额</span>  <span>花哪去了</span> <span>哪天花的</span>  </p> "); 
+    
   for (var i = 0; i < Object.keys(listShow[categoryEle[j]]).length ; i++) {
       newRow = $("<tr><td>￥"+listShow[categoryEle[j]][i][0]+"</td><td>"+listShow[categoryEle[j]][i][1]+"</td><td>"+listShow[categoryEle[j]][i][2]+"</td></tr>");  
     if (!moneyCount[categoryEle[j]]) {
@@ -297,7 +330,7 @@ function update(){
     newTable.append(newRow);
   }
 
-  if(!(Object.keys(listShow[categoryEle[j]]).length %2) ){
+  if(Object.keys(listShow[categoryEle[j]]).length %2 ){
     var nullRow = $("<tr><td></td></tr>");
     nullRow.hide();
     newTable.append(nullRow);
@@ -313,25 +346,26 @@ function update(){
   
   
 } 
-
+  selectTab.append("<div class = 'clear'/>");
    var $newTableGroup = $("<div id = 'tableGroup' ></div>");
  
   $newTableGroup.appendTo("body");
 
   tabUl.appendTo("#tableGroup");
+  newTitleRow.appendTo("#tableGroup");
   warpDiv.appendTo("#tableGroup");
 
   var $selectLi = $("#selectTab li");
   $selectLi.click(function(){
     $(this).addClass("currentTab").siblings().removeClass("currentTab");
     var index = $selectLi.index(this);
-    $("#tableGroup table:eq("+index+")").show().siblings().hide();
+    $("#tableGroup table:eq("+index+")").show( ).siblings().hide();
   })
 
 
 
   $("#tableGroup tr:even,this").addClass("gray"); 
-  $("#tableGroup tr:not(:first-child)").prepend("<td><input type='checkbox' name='choice' value=''/></td>"); 
+  $("#tableGroup tr").prepend("<td><input type='checkbox' name='choice' value=''/></td>"); 
 
   $("#tableGroup tr").click(function(){
            
@@ -343,6 +377,7 @@ function update(){
   
   $("#tableGroup :radio:checked").parent().parent().css({"background-color":"gold"}); //这样会写成内联样式 后面的class修改不了
 
+  $("#selectTab li").css({"cursor":"pointer"});
 
 
   genPieChart(moneyCount);
@@ -353,7 +388,11 @@ update();
   
 
 
-
+  $("#add").mousedown(function(){
+     this.src = "img/buttonIn.png";
+  }).mouseup(function(){
+    this.src = "img/buttonOut.png";
+  })
  
 
 
@@ -400,7 +439,7 @@ update();
         var newRow = $("<tr><td>￥"+money+"</td><td>"+backup+"</td><td>"+date+"</td></tr>");  
       
         newRow.appendTo("#table"+i).prepend("<td><input type='checkbox' name='choice' value=''/></td>")
-        if(curTbLen%2 != 0){
+        if(curTbLen%2 == 0){
           newRow.addClass("gray");
         }
       }
@@ -411,7 +450,7 @@ update();
     $("#datePara").append(" <span id = 'tips'> <---这里要选个日期才行哦</span> ");
   }
    
-   // update();
+   update();
 
 });
 
@@ -424,17 +463,17 @@ function genPieChart( obj){
 
   var $pie;
   var percent;
-  // if($("#pieChart")){
-  //   $("#pieChart").remove();
-  // }
+  if($("#pieChart")){
+    $("#pieChart").remove();
+  }
 
-  // $newPieChart = $("<table id = 'pieChart' ></table>");
-  // $newPieChart.appendTo("body");
-  // if($("#holder")){
-  //   $("#holder").remove();
-  // }
-  // $newPie  = $("<div id = 'holder' ></div>");
-  // $newPie.appendTo("body");
+  $newPieChart = $("<table id = 'pieChart' ></table>");
+  $newPieChart.appendTo("body");
+  if($("#holder")){
+    $("#holder").remove();
+  }
+  $newPie  = $("<div id = 'holder' ></div>");
+  $newPie.appendTo("body");
   $pie = $("#pieChart");
   percent = calPercent(obj);
   for (var i = 0; i < category.length; i++) {
@@ -472,11 +511,16 @@ function calPercent(obj){
 
 
 function clearAll(){
+    if(confirm("点了数据就全没了！真的要这么做吗")){
     for (var i = 0; i < category.length; i++) {
     
     window.localStorage[categoryEle[i]]= '';
   }
    location.reload();
+  }
+  else {
+
+  }
 }
 
 Raphael.fn.pieChart = function (cx, cy, r, values, labels, stroke) {
