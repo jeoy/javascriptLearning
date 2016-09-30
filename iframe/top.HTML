@@ -1,0 +1,54 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+  #div0{
+    /*background-color: red;*/
+    width: 200px;
+    height: 600px;
+    float: left;
+  }
+  #div1{
+    float: left;
+    width: 200px;
+  }
+
+  #iframe1{
+    background-color: gold;
+  }
+   #iframe2{
+    background-color: silver;
+  }
+</style>
+</head>
+ 
+<body>
+ 
+<div> <input type="button" id ="button1" value="加"  >
+<input type="button" id ="button2" value="油" /”> </div>
+ 
+ <iframe id="iframe1" name="gg" src="iframe1.html" width="500" height="200"></iframe>
+
+<iframe id="iframe2" name="dd" src="iframe2.html" width="500" height="200"></iframe>
+</body>
+<script type="text/javascript" src="../scripts/jquery-1.8.3.min.js"></script>
+<script>
+
+// var aa = document.getElementById("iframe1").contentWindow.response();
+
+$(function(){
+  $("#button1").click(function(){
+     var aa = $("#iframe1")[0].contentWindow.location.reload();
+
+  })
+
+  $("#button2").remove();
+   
+
+})
+div0 = document.createElement("div");
+ 
+ 
+document.body.appendChild(div0);
+</script>

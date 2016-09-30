@@ -12,6 +12,20 @@ body{
   background-color: #f4efd9;
   padding-left: 40px;
 }
+
+#dataInput{
+  margin: 1em 0;
+}
+#tableGroup{
+  margin: 1em 0;
+}
+
+#add{
+  width: 120px;
+  height: 50px;
+  margin-left: 220px;
+  font-size: 1.2em;
+}
 label {
  
   display: inline-block;
@@ -35,26 +49,34 @@ input.money{
 }
  
 
-td{
+td,th{
     vertical-align: middle;
   min-width: 100px;
 
  
 }
 
-#tableGroup {
-
+#tableSubGroup {
     max-height:  400px;
     overflow: scroll;
+     
     ::-webkit-scrollbar{width:5px};
 }
 #tableGroup table {
+
   text-align:center;
   border-collapse: collapse;
-  margin-bottom: 2em;
-  border:  2px dotted gray;
+  /*margin-bottom: 2em;*/
+  
+}
+
+#tableGroup table tbody{
+     margin-bottom: 2em;
+     border:  2px dotted gray;
 
 }
+
+
 tr{
   /*background-color: red;*/
   border: 2px inset transparent ;
@@ -99,7 +121,9 @@ ol{
   border: 1px groove gray;
   width:300px;
 }
-#holder{margin:-350px 0 0 -350px;width:700px;height:700px;position:absolute;right:0%;top:50%; overflow: hidden;}
+#holder{
+  z-index: -5;
+  margin:-350px 0 0 -350px;width:700px;height:700px;position:absolute;right:0%;top:50%; overflow: hidden;}
 
 
 #tips{
@@ -107,8 +131,14 @@ ol{
   color:red;
 }
 
-tspan{
-  color: black !important;
+#illidaria{
+  position: fixed;
+  bottom: 1%;
+  right: 2%;
+  width: 60px;
+}
+#moneyCount {
+  margin-top: 2em;
 }
 </style>
 
@@ -121,14 +151,20 @@ tspan{
 <h1> 小薯条的记账本(financeManager)  v.1.0</h1>
  
 <div><p id ="datePara">这是 <input type="date" id="date" value ="2015-05-05"></input>的消费</p></div>
+
+<img id ="illidaria" src="img/Illidaria.png"></img>
+<div id = "dataInput"> </div>
+
 <button id="add">加入账本</button>
 <button onclick="clearAll()">clear</button>
 
+<div id = "tableGroup"></div>
+ 
 <table id = "pieChart" >
   
   
 </table>
-  
+
 <div id="holder"> </div>
 
 </body>
@@ -187,8 +223,8 @@ function initialInput(){
     inputTb.rows[inputTb.rows.length - 1].cells[2].appendChild(inputEle[categoryEle[i] +'Bk']);
      
   }
-
-   document.body.appendChild(inputTb);
+   document.getElementById("dataInput").appendChild(inputTb);
+ 
   
 }
 
@@ -218,18 +254,27 @@ function localStorageAddItem (itemName , addArr){
 $(function(){
     initialInput();
 
-  var warpDiv = $("<div class = 'clear' id = 'tableGroup'></div>");
-  var tabUl = $("<div class = 'clear'><ul id ='selectTab'></ul></div>");
-  tabUl.appendTo("body");
+function update(){
+  if($("#tableGroup")){
+    $("#tableGroup").remove();
+  }
+   // $("#tableGroup").appendTo("body");
+ 
+  var warpDiv = $("<div class = 'clear' id = 'tableSubGroup'></div>");
+  var tabUl = $("<div class = 'clear'></div>");
+  var selectTab = $("<ul id ='selectTab'></ul>")
+  selectTab.appendTo(tabUl);
   var listShow = {},
       moneyCount = {};
 
   for (var j = 0; j < category.length; j++) {
     var newTable = $("<table id = 'table"+j+"'></table>");
     var tab = $("<li id = 'tab"+j+"'>"+category[j]+"</li>");
-    $('#selectTab').append(tab);
+    selectTab.append(tab);
 
-  
+    if (j== 0){
+      tab.addClass("currentTab");
+    }
     if(window.localStorage[categoryEle[j]] ){
      listShow[categoryEle[j]] =  JSON.parse( window.localStorage[categoryEle[j]] );
 
@@ -238,21 +283,26 @@ $(function(){
     listShow[categoryEle[j]] = {};
   }
  
+  
 
+  //表头
+   var newRow = $("<tr><th> </th><th>金额</th><th>花哪去了</th><th>哪天花的 </th></tr>"); 
+    newTable.append(newRow);
   for (var i = 0; i < Object.keys(listShow[categoryEle[j]]).length ; i++) {
-    var newRow = $("<tr><td>￥"+listShow[categoryEle[j]][i][0]+"</td><td>"+listShow[categoryEle[j]][i][1]+"</td><td>"+listShow[categoryEle[j]][i][2]+"</td></tr>");  
+      newRow = $("<tr><td>￥"+listShow[categoryEle[j]][i][0]+"</td><td>"+listShow[categoryEle[j]][i][1]+"</td><td>"+listShow[categoryEle[j]][i][2]+"</td></tr>");  
     if (!moneyCount[categoryEle[j]]) {
           moneyCount[categoryEle[j]] = 0;
         }
         moneyCount[categoryEle[j]] += +listShow[categoryEle[j]][i][0];
     newTable.append(newRow);
   }
-  if(Object.keys(listShow[categoryEle[j]]).length %2 ){
+
+  if(!(Object.keys(listShow[categoryEle[j]]).length %2) ){
     var nullRow = $("<tr><td></td></tr>");
     nullRow.hide();
     newTable.append(nullRow);
   }
-  
+  newTable.append("<p id='moneyCount' >总额是: ￥<strong>"+ (moneyCount[categoryEle[j]]||0)+"</strong></p>")
    
   if(j == 0){
     newTable.appendTo(warpDiv);
@@ -263,8 +313,14 @@ $(function(){
   
   
 } 
-  
-  warpDiv.appendTo("body");
+
+   var $newTableGroup = $("<div id = 'tableGroup' ></div>");
+ 
+  $newTableGroup.appendTo("body");
+
+  tabUl.appendTo("#tableGroup");
+  warpDiv.appendTo("#tableGroup");
+
   var $selectLi = $("#selectTab li");
   $selectLi.click(function(){
     $(this).addClass("currentTab").siblings().removeClass("currentTab");
@@ -275,7 +331,7 @@ $(function(){
 
 
   $("#tableGroup tr:even,this").addClass("gray"); 
-  $("#tableGroup tr").prepend("<td><input type='checkbox' name='choice' value=''/></td>"); 
+  $("#tableGroup tr:not(:first-child)").prepend("<td><input type='checkbox' name='choice' value=''/></td>"); 
 
   $("#tableGroup tr").click(function(){
            
@@ -289,9 +345,16 @@ $(function(){
 
 
 
-
   genPieChart(moneyCount);
-  draw() 
+  draw();
+}
+  
+update();
+  
+
+
+
+ 
 
 
 
@@ -337,7 +400,7 @@ $(function(){
         var newRow = $("<tr><td>￥"+money+"</td><td>"+backup+"</td><td>"+date+"</td></tr>");  
       
         newRow.appendTo("#table"+i).prepend("<td><input type='checkbox' name='choice' value=''/></td>")
-        if(curTbLen%2 == 0){
+        if(curTbLen%2 != 0){
           newRow.addClass("gray");
         }
       }
@@ -347,19 +410,32 @@ $(function(){
   else{
     $("#datePara").append(" <span id = 'tips'> <---这里要选个日期才行哦</span> ");
   }
- // location.reload();
+   
+   // update();
 
 });
 
 
-
+ 
 
 });
 
 function genPieChart( obj){
-  var $pie = $("#pieChart");
-  var percent;
 
+  var $pie;
+  var percent;
+  // if($("#pieChart")){
+  //   $("#pieChart").remove();
+  // }
+
+  // $newPieChart = $("<table id = 'pieChart' ></table>");
+  // $newPieChart.appendTo("body");
+  // if($("#holder")){
+  //   $("#holder").remove();
+  // }
+  // $newPie  = $("<div id = 'holder' ></div>");
+  // $newPie.appendTo("body");
+  $pie = $("#pieChart");
   percent = calPercent(obj);
   for (var i = 0; i < category.length; i++) {
         
@@ -426,7 +502,7 @@ Raphael.fn.pieChart = function (cx, cy, r, values, labels, stroke) {
                 delta = 30,
                 bcolor = Raphael.hsb(start, 1, 1),
                 p = sector(cx, cy, r, angle, angle + angleplus, {fill: "90-" + bcolor + "-" + color, stroke: stroke, "stroke-width": 3}),
-                txt = paper.text(cx + (r + delta + 55) * Math.cos(-popangle * rad), cy + (r + delta + 25) * Math.sin(-popangle * rad), labels[j]).attr({fill: bcolor, stroke: "none", opacity: 0, "font-size": 20});
+                txt = paper.text(cx + (r + delta + 55) * Math.cos(-popangle * rad), cy + (r + delta + 25) * Math.sin(-popangle * rad), labels[j]).attr({fill: bcolor, stroke: "black", opacity: 0, "font-size": 22});
             p.mouseover(function () {
                 p.stop().animate({transform: "s1.1 1.1 " + cx + " " + cy}, ms, "elastic");
                 txt.stop().animate({opacity: 1}, ms, "elastic");
