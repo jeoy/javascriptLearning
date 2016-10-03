@@ -59,40 +59,39 @@ $(function(){
 			newPage.append(newTitle).appendTo(pagesGroup);
 	}
 
-	var console = $("#console");
+	var myconsole = $("#console");
 	document.body.addEventListener("click",function(e){
-	
+		myconsole.html("现在的滚轮数值:"+e.wheelDelta + "wait:"+wait);
 	 
 	})
 	var wait = 1;
 	document.body.addEventListener("mousewheel",function(e){
-		console.html("现在的滚轮数值:"+e.wheelDelta + "wait:"+wait);
-		// if($("body").is(":animated")){
-		// }
-		// else{
+		myconsole.html("现在的滚轮数值:"+e.wheelDelta + "wait:"+wait);
+		
+		console.log("触发事件");
+		if($("body").is(":animated")){
+		}
+		else{
+
 		if(wait){
 
-			if( e.wheelDelta < 0 ){
+			if( e.wheelDelta < -80 ){
 				$("body").animate({scrollTop:"+="+document.body.clientHeight},900)
-			    window.setTimeout(function(){
-			    	wait = 1;
-			    	console.html("现在的滚轮数值:"+e.wheelDelta + "wait:"+wait);
-			    },1400)
-				wait = 0;
+			 //    window.setTimeout(function(){
+			 //    	wait = 1;
+			 //    },900)
+				// wait = 0;
 			}
-			else if( e.wheelDelta == 0){
-
-			}
-			else{
+		 
+			else if(e.wheelDelta > 80){
 				$("body").animate({scrollTop:"-="+document.body.clientHeight},900)
-				window.setTimeout(function(){
-			    	wait = 1;
-			    	console.html("现在的滚轮数值:"+e.wheelDelta + "wait:"+wait);
-			    },1400)
-				wait = 0;
+			// 	window.setTimeout(function(){
+			//     	wait = 1; 
+			//     },900)
+			// 	wait = 0;
 			}
 		}
-		// }
+		}
 			
 		e.preventDefault();
 	})
