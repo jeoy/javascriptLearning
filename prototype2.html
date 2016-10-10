@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+  #div0{
+    /*background-color: red;*/
+    width: 200px;
+    height: 600px;
+    float: left;
+  }
+  #div1{
+    float: left;
+    width: 200px;
+  }
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="加" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="油" /”> </div>
+ 
+</body>
+
+<script>
+function f1(){};  
+
+
+function Person(){}; 
+var peter = new Person();
+// var f2 = function(){};  
+// // var f3 = function("n1","n2","return n1+n2");  
+ var a = Date(2);
+// console.log(typeof f1);  //function  
+// console.log(typeof f2);  //function  
+// console.log(typeof f3);   //function  
+ 
+console.log(typeof Person.__proto__);   //function  这个不在原型链上， 构造函数的 __proto__ 作为function的实例   
+ 						// Person.__proto__ 这个东西就是下面的   Function.prototype
+
+console.log(typeof Person.prototype);  						 //改函数的原型对象  
+console.log(typeof Person.prototype.__proto__);  			// Object Prototype
+console.log(typeof Person.prototype.__proto__.__proto__);   //null
+console.log( Person.prototype.__proto__.__proto__);   // null
+
+
+console.log("————————————————————昏割线——————————————")
+
+console.log(typeof Function.__proto__);   //function  这个不在原型链上， 构造函数的     
+console.log(typeof Function.prototype);  						 //  function 特殊的地方，他的原型『对象』对象是function
+console.log(typeof Function.prototype.__proto__);  			// Object Prototype
+console.log(typeof Function.prototype.__proto__.__proto__);   //null
+console.log( Function.prototype.__proto__.__proto__);   // null
+
+
+console.log("————————————————————昏割线——————————————")
+
+console.log(typeof Array.__proto__);   //function  这个不在原型链上， 构造函数的     
+console.log(typeof Array.prototype);  						 //  function 特殊的地方，他的原型『对象』对象是function
+console.log(typeof Array.prototype.__proto__);  			// Object Prototype
+console.log(typeof Array.prototype.__proto__.__proto__);   //null
+console.log( Array.prototype.__proto__.__proto__);   // null
+
+ 
+
+console.log( Object.__proto__.__proto__  == Object.prototype);   // null
+// div0.innerText =  result;
+// areacode.replace(oldareacode,"hahah");
+ 
+
+
+ 
+document.body.appendChild(div0);
+</script>

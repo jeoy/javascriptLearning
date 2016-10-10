@@ -34,7 +34,7 @@ function Person(name){
 A.prototype = {}; 
  
 var B = {}; 
-console.log(A.constructor);       
+console.log(  Function.constructor.__proto__.__proto__.__proto__);       
 console.log(B.constructor);   
  
  
@@ -44,7 +44,7 @@ A.prototype = {};
  
 var b = new A();   
 b.constructor = A.constructor; 
-console.log(a.constructor == A); 
+console.log(  b.constructor === Function);  
 console.log(a.constructor == b.constructor); 
 console.log(a instanceof A); 
 console.log(b instanceof A); 

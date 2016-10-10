@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style type="text/css">
+  #div0{
+    /*background-color: red;*/
+    width: 200px;
+    height: 600px;
+    float: left;
+  }
+  #div1{
+    float: left;
+    width: 200px;
+  }
+</style>
+</head>
+<body>
+ 
+<div> <input type="button" id ="button1" value="加" onclick="onClickBt1(this)">
+<input type="button" id ="button2" value="油" /”> </div>
+ 
+</body>
+
+<script>
+ result = [];
+ 
+function Person(age){
+   
+  this.age = age;
+  
+};
+
+function Student(age,num){
+  Person.call(this,age)
+  this.num = num;
+}
+
+var docter = new Person(35);
+
+docter.clotherColor = "white";
+
+
+ console.log(docter.__proto__ );
+ console.log();
+ console.log();
+//1.直接以父类的实例为原型，这样原型链不对，会把实例属性扩展到原型。
+ // Student.prototype =  new Person();     
+ // Student.prototype.constructor = Student;
+
+
+ // 2.避免扩展父类的实例属性 , 这样会引起修改子类原型，影响父类
+Student.prototype =  Person.prototype;
+
+Student.prototype.getNum = function(){ return this.num }
+
+
+
+//第三种方法
+
+function F(){
+
+}
+
+F.prototype = Person.prototype;
+
+Student.prototype = new F();
+
+Student.prototype.constructor = Student;
+
+
+var stu1 = new Student(15,"123");
+  
+  // stu1.constructor = Student;
+ console.log(stu1.constructor );
+ stu1.num = 456;
+
+ 
+
+//总结一个继承函数
+function inherit(C,P){
+   var F = function(){};
+   F.prototype = P.prototype;
+   C.prototype = new F();
+
+   c.prototype.constructor = C;
+}
+
+
+//是不是等同于 
+Student.prototype = Object.create(People.prototype)；
+ 
+
+ 
+</script>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title> </title>
+<style type = "text/css">
+  
+</style>
+<script  src = "angular-google.js"  ></script>
+
+</head>
+<body >
+  <div ng-controller="MyController">
+    <input ng-model="to" 
+          type="email" 
+          placeholder="Recipient" />
+    <textarea ng-model="emailBody"></textarea>
+    <pre>{{ to | uppercase }}</pre>
+  </div>
+ 
+
+<script> 
+angular.module('myApp', [])
+  .controller('MyController', 
+    function($scope, $interpolate) {
+    	$scope.to = "my best friend";
+      $scope.emailBody = 'Hello {{ abd }},\n\nMy name is Ari too!';
+      // Set up a watch
+      $scope.$watch('emailBody', function(dasd) {
+        if (dasd) {
+          var template = $interpolate(dasd);
+          $scope.previewText = 
+            template( {abd:$scope.to}) ;
+        }
+      });
+});
+
+
+angular.module('myApp.filter',[])
+.filter('capitalize',function(){
+	return function(input){
+		var inputArr =  [];
+		inputArr = input.split("");
+		for (var i = 0; i < inputArr.length; i++) {
+			inputArr[i] = inputArr[i][0].toUpperCase() + inputArr[i].slice(1);
+		}
+		return inputArr.join(",");
+	};
+});
+
+
+</script> 
+ 
+</body>
+
+
+
+ 
+
+</html>
