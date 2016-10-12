@@ -1,0 +1,41 @@
+<!doctype html>
+<html ng-app="myApp">
+<head>
+ 
+ <script  src = "angular-google.js"  ></script>
+<script  src = "ngMessages/messages.js"  ></script>
+</head>
+<body>
+
+  <input type="text" ng-model="theirUrl" />
+  <div my-directive 
+       my-url=" {{theirUrl}} " 
+       my-link-text="Click me to go to Google">
+  </div>
+
+
+   
+
+
+  <script>
+    angular.module('myApp', [])
+    .directive('myDirective', function() {
+      return {
+        restrict: 'A',
+        replace: true,
+        scope: {
+          myUrl: '@',     // binding strategy
+          myLinkText: '@' // binding strategy
+        },
+        template: '\
+        <div><label>My Url Field:</label>\
+          <input type = "text"\
+            ng-model = "myUrl" /> \
+          <a href="{{myUrl}}"> {{myLinkText}}</a> \
+        </div>'
+      };
+    });
+  </script>
+
+</body>
+</html>

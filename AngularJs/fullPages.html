@@ -6,7 +6,7 @@
 <style type = "text/css">
   
 </style>
-<script  src = "angular-google.js"  ></script>
+ 
 
 </head>
 <body >
@@ -15,15 +15,16 @@
           type="email" 
           placeholder="Recipient" />
     <textarea ng-model="emailBody"></textarea>
-    <pre>{{ to | uppercase }}</pre>
+    <pre>{{ to | capitalize }}</pre>
   </div>
  
-
+<script  src = "angular-google.js"  ></script>
+<script  src = "ngMessages/message.js"  ></script>
 <script> 
-angular.module('myApp', [])
+angular.module('myApp', ['myApp.filter'])
   .controller('MyController', 
     function($scope, $interpolate) {
-    	$scope.to = "my best friend";
+    	$scope.to = "my best friend@12.com";
       $scope.emailBody = 'Hello {{ abd }},\n\nMy name is Ari too!';
       // Set up a watch
       $scope.$watch('emailBody', function(dasd) {
@@ -40,11 +41,11 @@ angular.module('myApp.filter',[])
 .filter('capitalize',function(){
 	return function(input){
 		var inputArr =  [];
-		inputArr = input.split("");
+		inputArr = input.split(" ");
 		for (var i = 0; i < inputArr.length; i++) {
 			inputArr[i] = inputArr[i][0].toUpperCase() + inputArr[i].slice(1);
 		}
-		return inputArr.join(",");
+		return inputArr.join(" ");
 	};
 });
 
