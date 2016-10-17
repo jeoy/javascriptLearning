@@ -1,0 +1,70 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
+<head>
+
+<title> Ajax </title>
+<meta charset = "utf-8"/>
+<style type="text/css">
+html,body{
+height: 100%;
+background-color:gold;
+}
+ 
+</style>
+</head>
+
+
+<body>
+ 
+<ul id = "ul1">
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+
+
+<ul id = "ul2">
+	<li>1</li>
+	<li>2</li>
+	<li>3</li>
+	<li>4</li>
+	<li>5</li>
+</ul>
+
+
+<ul id = "ul3">
+	<li class = "unique">1</li>
+	<li class = "unique">2</li>
+	<li class = "unique">3</li>
+	<li  >4</li>
+	<li>5</li>
+</ul>
+
+
+</body>
+
+<script type="text/javascript" src ="scripts/jquery-1.8.3.min.js" ></script>
+<script>
+
+$(function(){
+	$("#ul1").on("click","li",function(){
+		$(this).css("background-color","red").siblings().css("background-color","white");
+	});
+
+
+
+	$("#ul2 li").bind("click",function(){
+		$(this).css("background-color","red").siblings().css("background-color","white");
+	});
+
+	$("#ul3 ").on("click","li.unique",function(){
+		$(this).css("background-color","red").siblings().css("background-color","white");
+	});
+})
+
+</script>

@@ -58,28 +58,29 @@ $(function(){
 			newPage.append(newTitle).appendTo(pagesGroup);
 	}
 
-	var console = $("#console");
+	var myconsole = $("#console");
 	document.body.addEventListener("click",function(e){
   
 	})
+	// document.body.addEventListener("mousewheel",function(e){
+	// 	console.html("现在的滚轮数值:"+e.wheelDelta)
+	// });
 	document.body.addEventListener("mousewheel",function(e){
-		console.html("现在的滚轮数值:"+e.wheelDelta)
-	});
-	// document.body.addEventListener("mouseover",function(e){
 
-	// 	var $page1 = $("#page2");
-	// 	console.html("clientHeight 值为:"+document.body.clientHeight +"<br>\  "
-	// 				+"offsetHeight 值为:"+document.body.offsetHeight +"<br>\  "
-	// 				+"scrollTop 值为:"+$page1[0].scrollTop +"<br>\  "
-	// 				+"scrollHeight 值为:"+document.body.scrollHeight +"<br>\  "
-	// 				+"screenTop 值为:"+window.screenTop +"<br>\  "
-	// 				+"$(document).height 值为:"+$(document).height( ) +"<br>\  "
-	// 				+"offsetTop 值为:"+document.body.offsetTop +"<br>\  "
-	// 				+"offsetTop 值为:"+document.body.offsetTop +"<br>\  "
-	// 				+"offsetTop 值为:"+document.body.offsetTop +"<br>\  "
-	// 		); 
+		var $page1 = $("#page2");
+		myconsole.html("clientHeight 值为:"+document.body.clientHeight +"<br>\  "
+					+"offsetHeight 值为:"+document.body.offsetHeight +"<br>\  "
+					+"scrollTop 值为:"+$("body").scrollTop() +"<br>\  "
+					+"offset().top 值为:"+$("body").offset().top +"<br>\  "
+					+"scrollHeight 值为:"+document.body.scrollHeight +"<br>\  "
+					+"screenTop 值为:"+window.screenTop +"<br>\  "
+					+"$(document).height 值为:"+$(document).height( ) +"<br>\  "
+					+"offsetTop 值为:"+document.body.offsetTop +"<br>\  "
+					+"offsetTop 值为:"+document.body.offsetTop +"<br>\  "
+					+"offsetTop 值为:"+document.body.offsetTop +"<br>\  "
+			); 
 	 
-	// })
+	})
  
 
 

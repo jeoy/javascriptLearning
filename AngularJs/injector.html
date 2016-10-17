@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html  ng-app>
+<head>
+
+<style type = "text/css">
+
+</style>
+
+</head>
+
+<body>
+
+
+</body>
+<script src = "angular-google.js"></script>
+<script type="text/javascript">
+	var data = ['John','Steve','Lily'];
+	var body = document.querySelector("body");
+	var ajaxFn = {
+		get: function(path,cb){
+			console.log(path+ 'requested');
+			cb(data);
+		}
+	}
+	var displayUser = function(domEl,ajax){
+		 
+		ajax.get("/api/users",function(user){
+			var html = '';
+			for (var i = 0; i < user.length; i++) {
+				html += '<h1>'+user[i]+'</h1>';
+			}
+			domEl.innerHTML = html;
+		})
+	};
+	var injector = {
+		storage:{},
+		register: function(name,resource){
+			this.storage[name] = resource;
+		},
+		resolve: function (target){
+			var FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m
+			var STRIP_COMMENTS = /((\/\/.*)|(\/\*[\s\S]*?\*\/))/mg;
+			fnText = target.toString().replace(STRIP_COMMENTS,'');
+			argDecl = fnText.match(FN_ARGS)[1].split(',');
+			var arg = [];
+			for (var i = 0; i < argDecl.length; i++) {
+				if(this.storage[argDecl[i]]) 
+					arg.push(this.storage[argDecl[i]]);
+			}
+ 
+			console.log(arg);
+			return function(){
+				target.apply({},arg);
+			}
+		}
+	}
+	injector.register('domEl',body);
+	injector.register('ajax',ajaxFn);
+	displayUser = injector.resolve(displayUser);
+	displayUser();
+
+</script>
+
+</html>
