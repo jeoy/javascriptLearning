@@ -24,6 +24,13 @@ button{
   line-height: 17px;
   font-size: 17px;
 }
+#result{
+  font-size: 20px;
+}
+.placeholder{
+  height: 30px;
+  /*background-color: red;*/
+}
 </style>
 </head>
 <body>
@@ -42,17 +49,22 @@ button{
     <h2>javaScript</h2>
 <div class="CodeMirror cm-s-monokai">
 <form><textarea id="code" name="code">
-function func() {
-    line = read_line();
-    print2(line);
+function func(){
+  
+
+print2("result");
 }</textarea></form>
 </div>
   </section>
   <section class="col-md-6">
     <div>
       <h2> 运行结果:</h2>
+ 
+      <div class="placeholder">  </div>
+       <button  id="clear" class="btn btn-block btn-warning ">清空输出板</button> 
       <p id = "result"></p>
     </div>
+
   </section>
   
 </article>
@@ -71,53 +83,82 @@ function func() {
 <script src="CodeMirror-master/lib/codemirror.js"></script>
 <script src="CodeMirror-master/mode/javascript/javascript.js"></script>
 <script>
-  var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+
+
+ 
+</script>
+
+<script type="text/javascript">
+// window.onerror = function(errorMessage, scriptURI, lineNumber,columnNumber,errorObj) {
+//      console.log("错误信息：" , errorMessage);
+//      console.log("出错文件：" , scriptURI);
+//      console.log("出错行号：" , lineNumber);
+//      console.log("出错列号：" , columnNumber);
+//      console.log("错误详情：" , errorObj);
+//   }
+
+// window.onerror = function(errorMessage, scriptURI, lineNumber,columnNumber,errorObj) {
+
+//    alert(errorMessage+"\n"+errorObj);
+// }
+
+
+// palindrome(" ra  ce   CAR");
+
+
+
+
+$(function(){
+  $("#clear").click(function(){
+    $("#result").html("");
+
+  })
+  $("#code").text(window.localStorage["code"]);
+
+    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     lineNumbers: true,
     styleActiveLine: true,
     matchBrackets: true
   });
 
   editor.setOption("theme", "monokai");
-  var input = document.getElementById("select");
- 
-</script>
-
-<script type="text/javascript">
-
-window.onerror =
-  function(errorMessage, scriptURI, lineNumber) {
-
-    alert("代码有错");
-}
-
-
-// palindrome(" ra  ce   CAR");
-
-
-$(function(){
- 
 
   function print2(str){
-     $("#result").text(str);
+      str = $("#result").html() +"<br>" +str;
+     $("#result").css("color","black").html(str);
   }
   function read_line(){
     return str = $("#inputTA").val();
   }
+
   $("#run").click(function(){
     // eval($("#code").val());
-    eval($(".CodeMirror-line").text());
+    // a+1;
+    var codeStr = "";
+    for (var i = 0; i < $(".CodeMirror-line").length; i++) {
+      codeStr += $(".CodeMirror-line")[i].innerText.replace(/\u200b/g,"") +'\n';
+    }
+    codeStr = codeStr.slice(0,-1);
+    window.localStorage["code"] = codeStr;
+    
     // var str;
     // str = $("#inputTA").val();
-    $("#result").text("running..");
+    // $("#result").text("running..");
     window.setTimeout(function(){
-       func( ) ;
-    },500)
+      try{
+      eval(codeStr);
+    }catch(e){
+      $("#result").css("color","red").text(e);
+    }
+    },1)
     
 
-  })
-
+  });
 })
 
+    
+  // var a=1;
+ 
 
 
 

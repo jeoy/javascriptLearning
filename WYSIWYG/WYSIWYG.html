@@ -109,7 +109,7 @@ $(function(){
 
   $("#run").click(function(){
     // eval($("#code").val());
-    eval($(".CodeMirror-line").text());
+    eval($(".CodeMirror-line").text().replace(/\u200b/g,""));
     var str;
     str = $("#inputTA").val();
     $("#result").text("running..");
