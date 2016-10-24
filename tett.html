@@ -21,40 +21,87 @@
 </head>
 <body>
 	<script type="text/javascript" >
-function swap(arr,i,j) {  
-    if(i!=j) {  
-        var temp=arr[i];  
-        arr[i]=arr[j];  
-        arr[j]=temp;  
-    }  
-}  
-var count=0;  
-var result = [];
+// var Person = function(firstAndLast) {
+//     var name = firstAndLast;
+    
+//     return {
+//        getFirstName:  function(){
+//       return  name.split(" ")[0];
+//     },
+//       getLastName: function(){
+//       return  name.split(" ")[1];
+//     },
+//       getFullName : function(){
+//       return  name;
+//     },
+//      setLastName : function(last){
+//        name = name.replace(/(\w+$)/,last);
+//     },
+//      setFirstName : function(first){
+//        name = name.replace(/(^\w+)/,first);
+//     },
+//      setFullName : function(firstAndLast){
+//        name = firstAndLast;
+//     } 
+//     };
+
+    
+// };
+// var Person = function(firstAndLast) {
+//      this.name = firstAndLast;
+// };
+
+// Person.prototype =  {
   
+//        getFirstName:  function(){
+//       return  this.name.split(" ")[0];
+//     },
+//       getLastName: function(){
+//       return  this.name.split(" ")[1];
+//     },
+//       getFullName : function(){
+//       return  this.name;
+//     },
+//      setLastName : function(last){
+//        this.name = this.name.replace(/(\w+$)/,last);
+//     },
+//      setFirstName : function(first){
+//        this.name = this.name.replace(/(^\w+)/,first);
+//     },
+//      setFullName : function(firstAndLast){
+//        this.name = firstAndLast;
+//     } 
+//  };
+
+
+var Person = function(firstAndLast) {
+     var name = firstAndLast;
+     this.getFirstName =function(){
+      return  name.split(" ")[0];
+    };
+      this.getLastName =function(){
+      return  name.split(" ")[1];
+    };
+      this.getFullName = function(){
+      return  name;
+    };
+     this.setLastName = function(last){
+        name = name.replace(/(\w+$)/,last);
+    };
+     this.setFirstName = function(first){
+        name = name.replace(/(^\w+)/,first);
+    };
+     this.setFullName = function(firstAndLast){
+        name = firstAndLast;
+    } ;
+ };
+
  
-function perm(arr) {  
-	arr = arr.split("");
-    (function fn(n) { //为第n个位置选择元素  
-        for(var i=n;i<arr.length;i++) {  
-            swap(arr,i,n);  
-            if(n+1<arr.length-1) //判断数组中剩余的待全排列的元素是否大于1个  
-                fn(n+1); //从第n+1个下标进行全排列  
-            else {
-            	if(!/(\w)\1/g.test(arr.join("")))
-                	result.push(arr.toString()); //显示一组结果  
-            }
-            swap(arr,i,n);  
-        }  
-    })(0);  
-  
-  return result;
-}  
- console.log(perm("abcdefa").length);
+var bob = new Person('Bob Ross');
 
+bob.getFullName();
 
-
-
-
+[1,2,3,4,5].sort();
 	</script>
 </body>
 </html>
