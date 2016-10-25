@@ -66,6 +66,7 @@ $(function(){
 	$(".session span").text(25);
 	$(".break span").text(5);
  	var sSecTotal = $(".session span").text()*60;
+ 	 // var sSecTotal = 5;
  	var bSecTotal = $(".break span").text()*60;
  	var Isbreak = false;
  	$(".Timer").text(genTimerStr(sSecTotal));
@@ -83,8 +84,8 @@ $(function(){
  			result;
 
  		hour = parseInt(sSecTotal/3600);
- 		min = parseInt((sSecTotal -3600*hour)/60);
- 		sec = sSecTotal - 3600*hour -60*min;
+ 		min = parseInt((sSecTotal %3600)/60);
+ 		sec = sSecTotal %3600 %60;
  		if(hour){
  			result =  timerFormat(hour)+":"+timerFormat(min)+":"+timerFormat(sec);
  		}
@@ -127,15 +128,16 @@ $(function(){
  		if(Timer1){
  			clearInterval(Timer1);
  			Timer1 = null;
- 			$(this).addClass("pause");
+ 			
  			$('button').removeClass('disabled'); 
- 			// if(Isbreak)
- 			// 	$("#water").css("background-color","#d02437");
- 			// else
- 			// 	$("#water").css("background-color","#4dd024");
+ 			if(Isbreak)
+ 				$(this).addClass("pauseR");
+ 			else
+ 				$(this).addClass("pause");
  		}
  		else{
  			$(this).removeClass("pause");
+ 			$(this).removeClass("pauseR");
  			$('button').addClass('disabled'); 
  			$('#water').removeClass();
  			Timer1 = window.setInterval(function(){
@@ -145,8 +147,7 @@ $(function(){
  					$("#item").text("Session");
  					$(".Timer").text(genTimerStr(sSecTotal));
  					$("#water").css("background-color","rgba(11,224,134,0.5)");
- 					$(".center").css("background-color","rgba(101,224,134,0.5)");
- 					// $(".pause").css("background-color","rgba(51,164,134,0.5)");
+ 					$(".center").css("background-color","rgba(101,224,134,0.5)"); 
  					$(".btn").css("background-color","rgba(11,224,134,0.5)");
  					$("body").css("background-color","rgba(121,224,134,0.5)");
  					if(sSecTotal == 0){
@@ -163,8 +164,7 @@ $(function(){
  					$("#item").text("Break");
 
  					$("#water").css("background-color","rgba(202, 53, 74, 0.5)");
- 					$(".center").css("background-color","rgba(222, 53, 74, 0.5)");
- 					// $(".pause").css("background-color","rgba(162, 53, 54, 0.5)");
+ 					$(".center").css("background-color","rgba(222, 53, 74, 0.5)"); 
  					$(".btn").css("background-color","rgba(202, 53, 74, 0.5)");
  					$("body").css("background-color","rgba(226, 125, 107, 0.7)");
 

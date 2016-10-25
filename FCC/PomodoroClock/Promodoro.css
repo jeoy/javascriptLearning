@@ -19,7 +19,10 @@ body {
   cursor: pointer;
 }
 .pause {
-  background-color: rgba(101, 164, 134, 0.5);
+  background-color: rgba(101, 164, 134, 0.5) !important;
+}
+.pauseR {
+  background-color: rgba(162, 53, 54, 0.5) !important;
 }
 .top {
   height: 55%;
